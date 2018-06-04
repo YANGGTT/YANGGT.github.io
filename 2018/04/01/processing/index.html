@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="学习笔记,processing," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="偶然接触到了Processing，感觉非常有意思，发现可以用它来做一些简单的图像处理。官方的库管理有点坑，有时候翻墙也下不了，花了不少功夫收集了一些库：链接：https://pan.baidu.com/s/1POWkAuetzBex3FJeh5ItZA 密码：9vws  颜色color() 用color()函数给color变量赋值，默认RGB模式    color(gray) 灰度值color(">
+<meta name="keywords" content="学习笔记,processing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="processing图像处理">
+<meta property="og:url" content="http://yoursite.com/2018/04/01/processing/index.html">
+<meta property="og:site_name" content="YANG">
+<meta property="og:description" content="偶然接触到了Processing，感觉非常有意思，发现可以用它来做一些简单的图像处理。官方的库管理有点坑，有时候翻墙也下不了，花了不少功夫收集了一些库：链接：https://pan.baidu.com/s/1POWkAuetzBex3FJeh5ItZA 密码：9vws  颜色color() 用color()函数给color变量赋值，默认RGB模式    color(gray) 灰度值color(">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-12T02:56:05.226Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="processing图像处理">
+<meta name="twitter:description" content="偶然接触到了Processing，感觉非常有意思，发现可以用它来做一些简单的图像处理。官方的库管理有点坑，有时候翻墙也下不了，花了不少功夫收集了一些库：链接：https://pan.baidu.com/s/1POWkAuetzBex3FJeh5ItZA 密码：9vws  颜色color() 用color()函数给color变量赋值，默认RGB模式    color(gray) 灰度值color(">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/01/processing/"/>
+
+
+
+
+
+  <title>processing图像处理 | YANG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YANG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/processing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YANG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YANG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">processing图像处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T00:00:00+08:00">
+                2018-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/processing/" itemprop="url" rel="index">
+                    <span itemprop="name">processing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>偶然接触到了Processing，感觉非常有意思，发现可以用它来做一些简单的图像处理。<br>官方的库管理有点坑，有时候翻墙也下不了，花了不少功夫收集了一些库：链接：<a href="https://pan.baidu.com/s/1POWkAuetzBex3FJeh5ItZA" target="_blank" rel="noopener">https://pan.baidu.com/s/1POWkAuetzBex3FJeh5ItZA</a> 密码：9vws</p>
+</blockquote>
+<h1 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h1><h3 id="color"><a href="#color" class="headerlink" title="color()"></a>color()</h3><blockquote>
+<p>用color()函数给color变量赋值，默认RGB模式  </p>
+</blockquote>
+<p>color(gray) 灰度值<br>color(gray,alpha) 带透明度的灰度值<br>color(R,G,B) R,G,B颜色<br>color(R,G,B,alpha) 带透明度的R,G,B颜色</p>
+<h3 id="colorMode"><a href="#colorMode" class="headerlink" title="colorMode()"></a>colorMode()</h3><blockquote>
+<p>切换RGB和HSB模式,用其他数值表示颜色<br><a href="http://www.xueui.cn/tutorials/color-tutorial/rgb-color-system-xiangjie-preexistence-series-of-color-thirteen.html" target="_blank" rel="noopener">RGB详解</a>，<a href="http://www.xueui.cn/tutorials/color-tutorial/hsb-color-picker-explanation-color-preexistence-series-eleven.html" target="_blank" rel="noopener">HSB详解</a></p>
+</blockquote>
+<p>colorMode(mode)  单纯的模式切换<br>colorMode(mode,range)  在RGB模式下可用range值表示各个分量的最大值<br>colorMode(mode,range1,range2,range3)  用三个值分别表示三个分量的最大值</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">colorMode(HSB); <span class="comment">//切换到HSB模式</span></span><br><span class="line">colorMode(RGB,<span class="number">1.0</span>)<span class="comment">//将红、绿、蓝三个分量设置成0.0-1.0之间</span></span><br><span class="line">colorMode(HSB,<span class="number">360</span>,<span class="number">100</span>,<span class="number">100</span>)<span class="comment">//设置色调为0-360，亮度和饱和度为0-100</span></span><br></pre></td></tr></table></figure>
+<h1 id="颜色分量"><a href="#颜色分量" class="headerlink" title="颜色分量"></a>颜色分量</h1><h3 id="red-blue-green-alpha-hue-saturation-brightness"><a href="#red-blue-green-alpha-hue-saturation-brightness" class="headerlink" title="red(),blue(),green(),alpha(),hue(),saturation(),brightness()"></a>red(),blue(),green(),alpha(),hue(),saturation(),brightness()</h3><blockquote>
+<p>读取不同通道的分量(针对color变量)</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">color c = (<span class="number">0</span>,<span class="number">51</span>,<span class="number">102</span>); <span class="comment">//默认alpha通道为225（不透明）</span></span><br><span class="line"><span class="keyword">float</span> a = blue(c); <span class="comment">//返回a的值为51.0；</span></span><br></pre></td></tr></table></figure>
+<p>也可用位运算获取颜色分量，运行速度会更快</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">color c = (<span class="number">0</span>,<span class="number">51</span>,<span class="number">102</span>);</span><br><span class="line"><span class="keyword">int</span> R = (c &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xFF</span> <span class="comment">//与red()功能相似</span></span><br><span class="line"><span class="keyword">int</span> G = (c &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span></span><br><span class="line"><span class="keyword">int</span> B = c &amp; <span class="number">0xFF</span></span><br></pre></td></tr></table></figure>
+<h1 id="滤波"><a href="#滤波" class="headerlink" title="滤波"></a>滤波</h1><blockquote>
+<p>滤波有8种模式</p>
+</blockquote>
+<p>filter(mode)<br>filter(mode,level)  某些模式需要设定参数  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">filter(THRESHOLD,<span class="number">0.3</span>); <span class="comment">//阈值化,把亮度大于最大亮度的30%的像素设置成白色</span></span><br><span class="line">filter(BLUR,<span class="number">1</span>); <span class="comment">//模糊，半径为1</span></span><br><span class="line">filter(POSTERIZE,<span class="number">100</span>); <span class="comment">//色调分离，值为0-255</span></span><br><span class="line">filter(GRAY); <span class="comment">//灰度化，无参数</span></span><br><span class="line">filter(DILATE); <span class="comment">//增加明亮区域，无参数</span></span><br><span class="line">filter(ERODE); <span class="comment">//降低明亮区域，无参数</span></span><br><span class="line">filter(INVERT); <span class="comment">//反相，无参数</span></span><br><span class="line">filter(OPAQUE); <span class="comment">//把alpha通道设置成不透明，无参数</span></span><br></pre></td></tr></table></figure>
+<h1 id="融合"><a href="#融合" class="headerlink" title="融合"></a>融合</h1><blockquote>
+<p>融合有14种模式</p>
+</blockquote>
+<p>blend(x,y,width,height,dx,dy,dweight,dheight,mode)<br>截取显示窗口内的一部分进行融合，x,y,width,height是所截取部分，dx,dy,dweight,dheight是目标位置，如果两个部分尺寸不一致，函数将自动适应<br>blend(srcimg,x,y,width,height,dx,dy,dweight,dheight,mode)选择srcimg作为截取缘区域</p>
+<blockquote>
+<p>AB为源图像像素，C为新图像像素，factor为对应的源图像alpha通道分量 </p>
+</blockquote>
+<p>BLENG:线性融合，c=A<em>faxtor+B<br>ADD：相加融合，C = min(A</em>factor + B, 255)<br>SUBTRACT:相减融合，C = max(B - A<em>factor, 0)<br>DARKEST：取最暗的像素，C = min(A</em>factor, B)<br>LIGHTEST：取最亮的像素，C = max(A<em>factor, B)<br>DIFFERENCE：从基础图像中减去颜色<br>EXCLUSION：类似于DIFFERENCE,不过程度较低<br>MULTIPLY：颜色相乘，得到的通常更暗，C = A</em>B<br>SCREEN:颜色相乘后取反<br>OVERLAY:MULTIPLY和SCREEN的混合，暗的值使用MULTIPLY<br>HARD_LIGHT:灰度值大于50%使用SCREEN融合，小于使用MULTIPLY<br>SOFT_LIGHT:与HARD_LIGHT相反<br>DODGE：高光<br>BURN：阴影</p>
+<h1 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h1><blockquote>
+<p>格式类似于融合</p>
+</blockquote>
+<p>copy(x,y,width,height,dx,dy,dweight,dheight)<br>copy(srcimg,x,y,width,height,dx,dy,dweight,dheight)</p>
+<h1 id="像素"><a href="#像素" class="headerlink" title="像素"></a>像素</h1><h3 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h3><blockquote>
+<p>获取像素</p>
+</blockquote>
+<p>get() 获取整个显示窗口的像素（图案）<br>get(x,y)  获取（x,y）位置的像素颜色(color值)<br>get(x,y width,height)  获取指定矩形框内的像素（图案）  </p>
+<p>使用1或3时必须用PImage定义一个变量<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PImage pix = get();</span><br><span class="line">image(pix,<span class="number">20</span>,<span class="number">20</span>);<span class="comment">//调用获取的像素（图像）放置在（20，20）位置</span></span><br><span class="line">image(pix,<span class="number">12</span>，<span class="number">21</span>，<span class="number">20</span>，<span class="number">20</span>);<span class="comment">//调用获取的像素（图像）放置在（12，21），并修改为20*20大小</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h3><blockquote>
+<p>写入像素  </p>
+</blockquote>
+<p>set(x,y,color) 把（x,y）像素设置成变量color储存的颜色<br>set(x,y,image) 把变量image储存的图像放置在（x,y）处</p>
+<h3 id="pixels"><a href="#pixels" class="headerlink" title="pixels[]"></a>pixels[]</h3><blockquote>
+<p>储存显示窗口每个像素的一维数组</p>
+</blockquote>
+<p>pixels[]使用前必须调用loadPixels(),同时再最后要调用updatePixels()<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">loadPixels();</span><br><span class="line">pixels[<span class="number">50</span>*width+<span class="number">25</span>] = color(<span class="number">0</span>);</span><br><span class="line">updatePixels();</span><br><span class="line"><span class="comment">//等价于:set(25,50,color(0))</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h1><blockquote>
+<p>根据邻接的像素重新设置像素的值</p>
+</blockquote>
+<p>卷积是把一个n*n的矩阵（称为卷积核）中的每个元素分别乘以对应邻接的9像素值（包括自身）之和设置成新的像素值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"><span class="keyword">float</span>[][] kernel =  &#123; &#123;-<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,&#125;,&#123;<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>&#125; &#125;; <span class="comment">//卷积核</span></span><br><span class="line">size(<span class="number">100</span>,<span class="number">100</span>);</span><br><span class="line">PImage img=loadImage(<span class="string">"1.jpg"</span>); <span class="comment">//载入图像</span></span><br><span class="line">img.loadPixels();</span><br><span class="line">PImage edgeImg=createImage(img.width,img.height,RGB) <span class="comment">//创建一张同样尺寸的图</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> y=<span class="number">1</span>;y&lt;img.height-<span class="number">1</span>;y++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">1</span>;x&lt;img.width-<span class="number">1</span>;x++) <span class="comment">//忽略顶、底、左、右边    </span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">float</span> sum=<span class="number">0</span>; <span class="comment">//像素最终的值</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> ky=-<span class="number">1</span>;ky&lt;=<span class="number">1</span>;ky++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> kx=-<span class="number">1</span>;kx&lt;=<span class="number">1</span>;kx++) <span class="comment">//邻接的像素</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> pos=(y+ky)*width+(x+kx); <span class="comment">//像素的位置</span></span><br><span class="line">                <span class="keyword">float</span> val=red(img.pixels[pos]);<span class="comment">//灰度图各分量相等</span></span><br><span class="line">                sum+=kerenl[ky+<span class="number">1</span>][kx+<span class="number">1</span>]*val <span class="comment">//做乘法</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        edgeImg.pixels[y*img.width+x]=color(sum); <span class="comment">//把值赋给新图中的像素</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>   
+<h1 id="调用摄像头"><a href="#调用摄像头" class="headerlink" title="调用摄像头"></a>调用摄像头</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"><span class="keyword">import</span> processing.video.*;</span><br><span class="line"></span><br><span class="line">Capture cam;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  size(<span class="number">640</span>, <span class="number">480</span>);</span><br><span class="line"></span><br><span class="line">  String[] cameras = Capture.list();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (cameras == <span class="keyword">null</span>) &#123;</span><br><span class="line">    println(<span class="string">"Failed to retrieve the list of available cameras"</span>);</span><br><span class="line">    cam = <span class="keyword">new</span> Capture(<span class="keyword">this</span>, <span class="number">640</span>, <span class="number">480</span>);</span><br><span class="line">  &#125; <span class="keyword">if</span> (cameras.length == <span class="number">0</span>) &#123;</span><br><span class="line">    println(<span class="string">"There are no cameras available for capture."</span>);</span><br><span class="line">    exit();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    println(<span class="string">"Available cameras:"</span>);</span><br><span class="line">    printArray(cameras);</span><br><span class="line"></span><br><span class="line">    cam = <span class="keyword">new</span> Capture(<span class="keyword">this</span>, cameras[<span class="number">0</span>]);</span><br><span class="line">    </span><br><span class="line">    cam.start();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (cam.available() == <span class="keyword">true</span>) &#123;</span><br><span class="line">    cam.read();</span><br><span class="line">  &#125;</span><br><span class="line">  image(cam, <span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">  </span><br></pre></td></tr></table></figure>   
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+            <a href="/tags/processing/" rel="tag"># processing</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/29/SCARA/" rel="next" title="基于marlin固件的SCARA机械臂">
+                <i class="fa fa-chevron-left"></i> 基于marlin固件的SCARA机械臂
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/02/processing示教/" rel="prev" title="processing示教上位机">
+                processing示教上位机 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="YANG" />
+            
+              <p class="site-author-name" itemprop="name">YANG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#颜色"><span class="nav-number">1.</span> <span class="nav-text">颜色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#color"><span class="nav-number">1.0.1.</span> <span class="nav-text">color()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#colorMode"><span class="nav-number">1.0.2.</span> <span class="nav-text">colorMode()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#颜色分量"><span class="nav-number">2.</span> <span class="nav-text">颜色分量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#red-blue-green-alpha-hue-saturation-brightness"><span class="nav-number">2.0.1.</span> <span class="nav-text">red(),blue(),green(),alpha(),hue(),saturation(),brightness()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#滤波"><span class="nav-number">3.</span> <span class="nav-text">滤波</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#融合"><span class="nav-number">4.</span> <span class="nav-text">融合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复制"><span class="nav-number">5.</span> <span class="nav-text">复制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#像素"><span class="nav-number">6.</span> <span class="nav-text">像素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get"><span class="nav-number">6.0.1.</span> <span class="nav-text">get()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">6.0.2.</span> <span class="nav-text">set()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pixels"><span class="nav-number">6.0.3.</span> <span class="nav-text">pixels[]</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积"><span class="nav-number">7.</span> <span class="nav-text">卷积</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调用摄像头"><span class="nav-number">8.</span> <span class="nav-text">调用摄像头</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YANG</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="arduino,学习笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考  关于arduino的定时器中断AVR328p（uno /nano等）包含三个定时器timer0、timer1、timer2。0和2是8位，1是16位。timer0被用在delay(),mill(),micros()等函数；timer1被用在Servo库；timer被用在pwm输出（tone（）函数）。所以如果要用到上面的这三个功能，就不能使用对应的中断。 arduino定时器中断使用av">
+<meta name="keywords" content="arduino,学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="arduino定时器中断">
+<meta property="og:url" content="http://yoursite.com/2018/03/29/Arduino定时器中断/index.html">
+<meta property="og:site_name" content="YANG">
+<meta property="og:description" content="参考  关于arduino的定时器中断AVR328p（uno /nano等）包含三个定时器timer0、timer1、timer2。0和2是8位，1是16位。timer0被用在delay(),mill(),micros()等函数；timer1被用在Servo库；timer被用在pwm输出（tone（）函数）。所以如果要用到上面的这三个功能，就不能使用对应的中断。 arduino定时器中断使用av">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.engblaze.com/wp/wp-content/uploads/timer-counter-control-registers.jpg">
+<meta property="og:image" content="http://www.engblaze.com/wp/wp-content/uploads/clock-select-bit.jpg">
+<meta property="og:updated_time" content="2018-04-11T15:39:45.757Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="arduino定时器中断">
+<meta name="twitter:description" content="参考  关于arduino的定时器中断AVR328p（uno /nano等）包含三个定时器timer0、timer1、timer2。0和2是8位，1是16位。timer0被用在delay(),mill(),micros()等函数；timer1被用在Servo库；timer被用在pwm输出（tone（）函数）。所以如果要用到上面的这三个功能，就不能使用对应的中断。 arduino定时器中断使用av">
+<meta name="twitter:image" content="http://www.engblaze.com/wp/wp-content/uploads/timer-counter-control-registers.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/29/Arduino定时器中断/"/>
+
+
+
+
+
+  <title>arduino定时器中断 | YANG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YANG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/29/Arduino定时器中断/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YANG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YANG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">arduino定时器中断</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-29T00:00:00+08:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/arduino/" itemprop="url" rel="index">
+                    <span itemprop="name">arduino</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><a href="http://www.engblaze.com/microcontroller-tutorial-avr-and-arduino-timer-interrupts/" target="_blank" rel="noopener">参考</a></p>
+</blockquote>
+<h2 id="关于arduino的定时器中断"><a href="#关于arduino的定时器中断" class="headerlink" title="关于arduino的定时器中断"></a>关于arduino的定时器中断</h2><p>AVR328p（uno /nano等）包含三个定时器timer0、timer1、timer2。<br>0和2是8位，1是16位。timer0被用在delay(),mill(),micros()等函数；timer1被用在Servo库；timer被用在pwm输出（tone（）函数）。所以如果要用到上面的这三个功能，就不能使用对应的中断。</p>
+<p>arduino定时器中断使用avr的c，需包含</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;avr/io.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;avr/interrupt.h&gt;  </span></span></span><br></pre></td></tr></table></figure>
+<h2 id="中断的使用"><a href="#中断的使用" class="headerlink" title="中断的使用"></a>中断的使用</h2><p>定时器以时钟频率开始计数，当达寄存器溢出时时触发中断函数。<br>定时器的初值被储存在TCCRxA和TCCRxB中，其中x表示定时器的序号。<br><img src="http://www.engblaze.com/wp/wp-content/uploads/timer-counter-control-registers.jpg" alt="image"></p>
+<h3 id="初始化："><a href="#初始化：" class="headerlink" title="初始化："></a>初始化：</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cil();<span class="comment">//禁止全局中断</span></span><br><span class="line">TCCR1A=<span class="number">0</span>;</span><br><span class="line">TCCR1B=<span class="number">0</span>;<span class="comment">//初值设0</span></span><br></pre></td></tr></table></figure>
+<h3 id="中断设置："><a href="#中断设置：" class="headerlink" title="中断设置："></a>中断设置：</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TIMSK1 = (<span class="number">1</span> &lt;&lt; TOIE1);<span class="comment">//允许溢出中断</span></span><br><span class="line">TCCR1B |= (<span class="number">1</span> &lt;&lt; CS10);<span class="comment">//溢出条件</span></span><br><span class="line"><span class="comment">//设置CS10以时钟频率进行中断，为((1/16)*e-6)*65535=0.0041us</span></span><br><span class="line">sei();<span class="comment">//启用全局中断</span></span><br></pre></td></tr></table></figure>
+<p>组合设置CS10、CS11、CS12以时钟频率额的小数倍数进行中断。触发中断的周期可以这么计算：<br>1/（时钟频率<em>倍数）</em>寄存器最大数值（16位对应65535）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TCCR1B |= (<span class="number">1</span> &lt;&lt; CS10);</span><br><span class="line">TCCR1B |= (<span class="number">1</span> &lt;&lt; CS12);</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.engblaze.com/wp/wp-content/uploads/clock-select-bit.jpg" alt="image"></p>
+<h3 id="范例"><a href="#范例" class="headerlink" title="范例:"></a>范例:</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pinMode(LEDPIN, OUTPUT);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 初始化 Timer1</span></span><br><span class="line">    cli();             <span class="comment">//  禁用全局中断</span></span><br><span class="line">    TCCR1A = <span class="number">0</span>;        <span class="comment">// 初始化</span></span><br><span class="line">    TCCR1B = <span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 启用 Timer1 溢出中断:</span></span><br><span class="line">    TIMSK1 = (<span class="number">1</span> &lt;&lt; TOIE1);</span><br><span class="line">    <span class="comment">// 设置CS10以时钟频率进行中断:</span></span><br><span class="line">    TCCR1B |= (<span class="number">1</span> &lt;&lt; CS10);</span><br><span class="line">    <span class="comment">// 启用全局中断:</span></span><br><span class="line">    sei();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//中断函数</span></span><br><span class="line">ISR(TIMER1_COMPA_vect)</span><br><span class="line">&#123;</span><br><span class="line">    digitalWrite(LEDPIN, !digitalRead(LEDPIN));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="以特定时间进行中断（CTC）"><a href="#以特定时间进行中断（CTC）" class="headerlink" title="以特定时间进行中断（CTC）"></a>以特定时间进行中断（CTC）</h2><p>当定时计数器达到给定的计数次数就进行中断。</p>
+<h3 id="根据中断时间数计算计数次数："><a href="#根据中断时间数计算计数次数：" class="headerlink" title="根据中断时间数计算计数次数："></a>根据中断时间数计算计数次数：</h3><p>给定计数次数+1=中断时间/周期<br>这里的周期可以是时钟周期经过CS10、CS11、CS12设置后的周期。<br>范例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    </span><br><span class="line"> </span><br><span class="line">    <span class="comment">// initialize Timer1</span></span><br><span class="line">    cli();          <span class="comment">// disable global interrupts</span></span><br><span class="line">    TCCR1A = <span class="number">0</span>;     <span class="comment">// set entire TCCR1A register to 0</span></span><br><span class="line">    TCCR1B = <span class="number">0</span>;     <span class="comment">// same for TCCR1B</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// set compare match register to desired timer count:</span></span><br><span class="line">    OCR1A = <span class="number">15624</span>;<span class="comment">//给定的计数次数，这里对应1s的中断周期</span></span><br><span class="line">    <span class="comment">// 启用ctc模式</span></span><br><span class="line">    TCCR1B |= (<span class="number">1</span> &lt;&lt; WGM12);</span><br><span class="line">    <span class="comment">//预先设置CS10和CS12,使周期为时钟周期的1024倍</span></span><br><span class="line">    TCCR1B |= (<span class="number">1</span> &lt;&lt; CS10);</span><br><span class="line">    TCCR1B |= (<span class="number">1</span> &lt;&lt; CS12);</span><br><span class="line">    <span class="comment">// 启用比较中断:</span></span><br><span class="line">    TIMSK1 |= (<span class="number">1</span> &lt;&lt; OCIE1A);</span><br><span class="line">    sei();          <span class="comment">// enable global interrupts</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>如果需要使用更长时间的中断可以在中断函数中加入判断：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ISR(TIMER1_COMPA_vect)</span><br><span class="line">&#123;</span><br><span class="line">    seconds++;</span><br><span class="line">    <span class="keyword">if</span> (seconds == <span class="number">10</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        seconds = <span class="number">0</span>;</span><br><span class="line">        ......;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="启用和关闭定时器中断"><a href="#启用和关闭定时器中断" class="headerlink" title="启用和关闭定时器中断"></a>启用和关闭定时器中断</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">start_timer1</span><span class="params">()</span><span class="comment">//启用定时器1</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cli();          </span><br><span class="line">	TCCR1A = <span class="number">0</span>;      <span class="keyword">register</span> to <span class="number">0</span></span><br><span class="line">	TCCR1B = <span class="number">0</span>;</span><br><span class="line">    OCR1A=init_dt;</span><br><span class="line">    <span class="comment">// turn on CTC mode:</span></span><br><span class="line">    TCCR1B |= (<span class="number">1</span> &lt;&lt; WGM12);</span><br><span class="line">    <span class="comment">// Set CS10 and CS12 bits for 1024 prescaler:</span></span><br><span class="line">    TCCR1B |= (<span class="number">1</span> &lt;&lt; CS10);</span><br><span class="line">    <span class="comment">//TCCR1B |= (1 &lt;&lt; CS12);</span></span><br><span class="line">    <span class="comment">// enable timer compare interrupt:</span></span><br><span class="line">    TIMSK1 |= (<span class="number">1</span> &lt;&lt; OCIE1A);</span><br><span class="line">    sei();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">stop_timer1</span><span class="params">()</span><span class="comment">//关闭timer1</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line">    cli();</span><br><span class="line">    TCCR1A = <span class="number">0</span>;     <span class="comment">// set entire TCCR1A register to 0</span></span><br><span class="line">    TCCR1B = <span class="number">0</span>; </span><br><span class="line">    sei();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/arduino/" rel="tag"># arduino</a>
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/28/marlin常用G、M代码/" rel="next" title="marlin常用G、M代码">
+                <i class="fa fa-chevron-left"></i> marlin常用G、M代码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/29/SCARA/" rel="prev" title="基于marlin固件的SCARA机械臂">
+                基于marlin固件的SCARA机械臂 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="YANG" />
+            
+              <p class="site-author-name" itemprop="name">YANG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于arduino的定时器中断"><span class="nav-number">1.</span> <span class="nav-text">关于arduino的定时器中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断的使用"><span class="nav-number">2.</span> <span class="nav-text">中断的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化："><span class="nav-number">2.1.</span> <span class="nav-text">初始化：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断设置："><span class="nav-number">2.2.</span> <span class="nav-text">中断设置：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范例"><span class="nav-number">2.3.</span> <span class="nav-text">范例:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以特定时间进行中断（CTC）"><span class="nav-number">3.</span> <span class="nav-text">以特定时间进行中断（CTC）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#根据中断时间数计算计数次数："><span class="nav-number">3.1.</span> <span class="nav-text">根据中断时间数计算计数次数：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充"><span class="nav-number">4.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用和关闭定时器中断"><span class="nav-number">5.</span> <span class="nav-text">启用和关闭定时器中断</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YANG</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

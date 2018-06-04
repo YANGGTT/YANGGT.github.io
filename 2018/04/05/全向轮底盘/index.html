@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="项目,全方位移动机器人," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="全向轮特点：与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面的影响。在调试的时候还发现了一个比较致命的地方：一般的全向轮是像渲染图中那样双层的，这就会导致轮子在转动过程中和地面的接触点相对于机器人坐标是变化的，就是图中每个轮到底盘中心的位置是有两个值的，一个外层接触时的">
+<meta name="keywords" content="项目,全方位移动机器人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三轮全向轮底盘">
+<meta property="og:url" content="http://yoursite.com/2018/04/05/全向轮底盘/index.html">
+<meta property="og:site_name" content="YANG">
+<meta property="og:description" content="全向轮特点：与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面的影响。在调试的时候还发现了一个比较致命的地方：一般的全向轮是像渲染图中那样双层的，这就会导致轮子在转动过程中和地面的接触点相对于机器人坐标是变化的，就是图中每个轮到底盘中心的位置是有两个值的，一个外层接触时的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9upm4vrij213c0u00un.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/e8d4eb99gy1fq9utiw7rxj20z70owdj1.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99ly1fqcly1oo2oj21ko12341b.jpg">
+<meta property="og:updated_time" content="2018-04-15T02:13:02.288Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="三轮全向轮底盘">
+<meta name="twitter:description" content="全向轮特点：与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面的影响。在调试的时候还发现了一个比较致命的地方：一般的全向轮是像渲染图中那样双层的，这就会导致轮子在转动过程中和地面的接触点相对于机器人坐标是变化的，就是图中每个轮到底盘中心的位置是有两个值的，一个外层接触时的">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9upm4vrij213c0u00un.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/05/全向轮底盘/"/>
+
+
+
+
+
+  <title>三轮全向轮底盘 | YANG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YANG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/全向轮底盘/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YANG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YANG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">三轮全向轮底盘</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T00:00:00+08:00">
+                2018-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9upm4vrij213c0u00un.jpg" alt=""></p>
+<blockquote>
+<p><strong>全向轮特点</strong>：与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面的影响。在调试的时候还发现了一个比较致命的地方：一般的全向轮是像渲染图中那样双层的，这就会导致轮子在转动过程中和地面的接触点相对于机器人坐标是变化的，就是图中每个轮到底盘中心的位置是有两个值的，一个外层接触时的R，和内层接触时的r。当然在地盘足够大，或者对精度要求不那么高的情况下还是可以接受的。</p>
+</blockquote>
+<h1 id="速度反解"><a href="#速度反解" class="headerlink" title="速度反解"></a>速度反解</h1><p><strong>思路：先考虑机器人在机器人坐标x’oy’下的速度和各轮子线速度的关系，再由绝对坐标和机器人坐标的旋转变换关系得到机器人绝对速度和各电机转速的关系。</strong><br><img src="http://wx3.sinaimg.cn/mw690/e8d4eb99gy1fq9utiw7rxj20z70owdj1.jpg" alt=""><br>如图：三个车轮A、B、C与底盘中心的连线各成120度分布，且转轴与连线共线。<br>规定：各车轮线速度图示方向为正，机器人的角速度逆时针为正，当电机不转动时是刚性的。</p>
+<p>首先，在机器人坐标下，分别考虑3个电机对机器人速度的影响，再进行叠加。以B轮为例：当只有B转动时，A、C轮只能沿轴向移动，可以做出速度顺心I(对于有些轮系机器人可速度顺心可能不是很容易就能找到，所以比较通用的做法是使用刚体的平面运动)。则VB对机器人的速度贡献为：VBx’=-(2/3)<em>VB</em>cos60°，VBy’=-(2/3)<em>VB</em>sin60°，Wo’=VB/3R。同理计算A、C的分量，叠加后有：</p>
+<p>$$<br>\begin{bmatrix}<br>V_{x}’\\<br>V_{y}’  \\<br>\omega’<br>\end{bmatrix}=\begin{bmatrix}<br> 2/3&amp; -1/3 &amp;-1/3 \\<br> 0&amp; 1/\sqrt{3} &amp;-1/\sqrt{3} \\<br> 1/3R&amp;1/3R  &amp;1/3R<br>\end{bmatrix}\begin{bmatrix}<br>V_{A}\\<br>V_{B}\\<br>V_{C}<br>\end{bmatrix}<br>$$  </p>
+<p>绝对坐标和机器人坐标的关系(旋转变换)：<br>$$<br>\begin{bmatrix}<br>v_{x}’\\<br>v_{y},\\<br>\omega<br>\end{bmatrix}=\begin{bmatrix}<br> cos\theta &amp; sin\theta &amp;0 \\<br> -sin\theta&amp; cos\theta &amp;0 \\<br> 0&amp;0  &amp;1<br>\end{bmatrix}\begin{bmatrix}<br>V_{x}\\<br>V_{y}\\<br>\omega<br>\end{bmatrix}<br>$$</p>
+<p>由此可得：<br>$$<br>V_{A}=V_{x}cos\theta +V_{y}sin\theta+R\omega  \\<br>V_{B}=(-1/2V_{x}+\sqrt{3}/2V_{y})cos\theta -(\sqrt{3}/2V_{x}+1/2V_{y})sin\theta+R\omega  \\<br>V_{C}=-(1/2V_{x}+\sqrt{3}/2V_{y})cos\theta +(\sqrt{3}/2V_{x}-1/2V_{y})sin\theta+R\omega<br>$$</p>
+<h1 id="位姿反解"><a href="#位姿反解" class="headerlink" title="位姿反解"></a>位姿反解</h1><p>对上述公式从0积到t可以得到坐标的反解，但会发现像$V_{x}cos\theta$这样的项难以积分。从公式观察看，由于$\theta$的存在，导致轮子的运动不是线性的（当小车在绝对坐标下的三个自由度上都是匀速运动的时候，三个轮子却不是匀速的）。因此可以把小车的运动分为两部分：一部分是XY方向的联动，一部分是自转。</p>
+<p>XY联动：此时，且保持不变视为常数，对上述公式积分(这里的$\theta$是当前的姿态)：<br>$$<br>\int_{0}^{t}V_{A}dt=s_{A}=xcos\theta+ysin\theta \\<br>\int_{0}^{t}V_{B}dt=s_{B}=(-1/2x+\sqrt{3}/2y)cos\theta-(\sqrt{3}/2x+1/2y)sin\theta \\<br>\int_{0}^{t}V_{C}dt=s_{C}=-(1/2x+\sqrt{3}/2y)cos\theta-(\sqrt{3}/2x-1/2y)sin\theta<br>$$<br>自转：此时Vx=Vy=0,有(这里的$\varphi$是要转过的角度)：<br>$$<br>s_{A}=s_{B}=s_{C}=R\varphi<br>$$</p>
+<p>在程序中需要计算当前坐标和目标坐标所对应的轮子的线位移，再作差求出需要移动的位移，最后执行电机动作。所以直接把上面的两种情况相加，作为最终的位姿反解。当$\theta$为定值时，作差后最后一项会被消去，当xy为定值时，前两项会被消去。<br>$$<br>s_{A}=xcos\theta+ysin\theta+R\varphi \\<br>s_{B}=(-1/2x+\sqrt{3}/2y)cos\theta-(\sqrt{3}/2x+1/2y)sin\theta+R\varphi \\<br>s_{C}=-(1/2x+\sqrt{3}/2y)cos\theta-(\sqrt{3}/2x-1/2y)sin\theta+R\varphi<br>$$</p>
+<h1 id="高级运动"><a href="#高级运动" class="headerlink" title="高级运动"></a>高级运动</h1><p>在实现一些高级运动方式之前，需要对上面得到的位姿反解再做一些讨论。  </p>
+<p><strong>意义：</strong> 表示机器人从坐标原点先移动到目标坐标(x,y),再转动到姿态$\varphi$各个轮子需要行进的线位移 。如果把方程中的$\theta$替换成$\varphi$，就表示机器人从坐标原点先转动到姿态$\varphi$到,再移动到目标坐标(x,y)各个轮子需要行进的线位移 。  </p>
+<p><strong>适用条件：</strong> 根据假定的积分条件，只有坐标XY和姿态$\theta$其中一方在运动时保持不变，以上位姿反解才适用。因此，一个运动不能同时存在坐标和姿态分量。 </p>
+<p><strong>对应关系：</strong> 机器人的位姿和各个轮子的线位移的对应关系不唯一，举个简单的例子：到达同样的位姿，先平移后旋转和先旋转后平移两种方式对应的车轮的线位移是不一样的。事实上，对于给定的某一目标位姿，转动和平动发生的时序可以不一样，而机器人的坐标运动是受实时姿态的影响的，这就导致了不同时序的转动和平动所对应的轮子的线位移也不一样。所以要如果要描述机器人的位姿和各个轮子的线位移的对应关系，必须要明确平动和转动发生的时序，就像意义中描述的那样，这样才能建立起机器人位姿和各轮子线位移的映射。从这也可以看出反解的适用条件。在最开始实现的时候，我以为和关节机械臂一样，一次运动结束后，当前轮子的线位移等于目标位姿对应的轮子线位移，然而如果这次运动有位姿的变化，从位姿反解看会发现当前轮子的线位移是根据初始时刻的姿态计算的，这就破坏了原先的映射关系，在下一次运动的时候就会出错。因此每次运动结束后必须对当前坐标再进行一次反解运算。</p>
+<p><strong>位移矢量和旋转矢量的分离：</strong> 虽然平动会受到当前姿态的影响，但是如果以机器人为参考系，对于给定的位移将始终和机器人保持固定的位置关系，所以将上面的坐标描述成相对于机器人坐标系的位移矢量会更合适。而转动不会受机器人当前坐标的影响，因此可以从给定的一组车轮线位移中提取位移矢量和旋转矢量。假设三个轮子的总线位移分别为$s_{A}$、$s_{B}$、$s_{C}$，位移矢量对应的轮子线位移分别为$s_{a}$、$s_{b}$、$s_{c}$，旋转矢量都为$s_{\theta}$。则有：<br>$$<br>\overrightarrow{s_{A}}=\overrightarrow{s_{a}}+\overrightarrow{s_{\theta}} \\<br>\overrightarrow{s_{B}}=\overrightarrow{s_{b}}+\overrightarrow{s_{\theta}} \\<br>\overrightarrow{s_{C}}=\overrightarrow{s_{c}}+\overrightarrow{s_{\theta}}<br>$$<br>对于线位移，不能包含有旋转分量，即“矩”为零，则：<br>$$<br>\overrightarrow{s_{a}}+\overrightarrow{s_{b}}+\overrightarrow{s_{c}} =0<br>$$<br>可以得到：<br>$$<br>\overrightarrow{s_{\theta}}=(\overrightarrow{s_{A}}+\overrightarrow{s_{B}}+\overrightarrow{s_{C}})/3<br>$$<br>剩下的部分就是位移分量了。<br>这里的位移分量表示的是相对于机器人坐标系的位移矢量对应的三个车轮的线位移，而旋转矢量表示的是仅引起机器人发生姿态变化的三个轮子的的线位移。因为机器人的转动不会受平动的影响，所以对于姿态相同的两次不同的运动，所分离出来的旋转矢量是一样的，反过来，如果分离出来的旋转矢量相同，最终的姿态也相同。</p>
+<h2 id="坐标反解的运动轨迹"><a href="#坐标反解的运动轨迹" class="headerlink" title="坐标反解的运动轨迹"></a>坐标反解的运动轨迹</h2><p>对于一次包含三个自由度的运动是不能直接使用上面的位姿反解的，这会得到与预期不符的运动，但这个不符合预期的运动还是有一定的规律的，这里对直接使用上面的坐标反解进行三自由度运动将会得到什么样的轨迹做一个分析。<br>首先对运动进行分片：将各个轮子的线位移分别分成n等份。对每 个片段分离位移矢量和旋转矢量，每个片段的位移矢量在机器人坐标系中保持固定的位置关系,当片段足够小时可假设在一个片段间的姿态是保持不变的，可作出如下的离散轨迹，当n足够大时，可得到真实的曲线。<br><img src="http://wx4.sinaimg.cn/mw690/e8d4eb99ly1fqcly1oo2oj21ko12341b.jpg" alt=""><br><strong>先声明一些量：</strong><br>    总距离：s<br>    总角位移：$\varphi$<br>    分片数：n<br>    当前片段：i<br>    当前角位移：$\theta$<br>    角位移片段长：$\Delta\theta$<br>    位移片段长：$\Delta s$</p>
+<p>可得到以下关系：<br>$$<br>\Delta\theta=\varphi/n \\<br>\Delta s=s/n \\<br>\theta/\varphi=i/n<br>$$</p>
+<p>根据离散运动的形式可以列出：<br>$$<br>x=\Delta s(cos\Delta\theta+cos2\Delta\theta+…+cosi\Delta\theta)  \\<br>y=\Delta s(sin\Delta\theta+sin2\Delta\theta+…+sini\Delta\theta)<br>$$<br>上面两式的结果可以在网上找到，这里就不做推导了。<br>$$<br>x=\frac{s}{n}\frac{[sin(i+1/2)\Delta\theta]-sin(\Delta\theta/2)}{2sin(\Delta\theta/2)} \\<br>  =\frac{s}{n}\frac{sin(\theta+\varphi/2n)-sin(\varphi/2n)}{2sin(\varphi/2n)} \\<br>  =\frac{s}{2n}(\frac{sin\theta}{tan(\varphi/2n)}+cos\theta-1)<br>$$<br>$$<br>y=\frac{s}{n}\frac{sin(i\Delta\theta/2)[sin(i\Delta\theta/2+\Delta\theta/2)]}{sin(\Delta\theta/2)} \\<br>  =\frac{s}{n}\frac{sin(\theta/2)sin(\theta/2+\varphi/2n)}{sin(\varphi/2n)} \\<br>  =\frac{s}{2n}(\frac{1-cos\theta}{tan(\varphi/2n)}+sin\theta)<br>$$<br>取极限：<br>$$<br>\lim_{n \to \infty }x=\lim_{n \to \infty }\frac{s\cdot sin\theta}{\varphi}\frac{\varphi/2n}{tan(\varphi/2n)}+s\cdot cos\theta/2n-s/2n=s\cdot sin\theta/\varphi<br>对y同样的：<br>$$<br>\lim_{n \to \infty }y=s\cdot (1-cos)\theta/\varphi<br>$$<br>可以看出这是一个圆的参数方程</p>
+<p>##三自由联动<br>对于三个自由度的运动（匀速平动的同时匀速转动），首先想到的方法是将运动离散化，交替进行转动和平动，依次到达这些离散点。但这种方法会出现极大的抖动，这是因为在完成直线部分准备进行旋转运动的时候所计算出来的电机增量有时会是负值，就是过程中电机有倒转，并不是一个方向转到底的。所以我使用了另外一种办法：同样是将运动离散化，但不交替进行两种运动，直接使用上面的坐标反解。这样电机在运动过程中没有倒转，同时从直接使用坐标反解的运动轨迹看，初始时刻的轨迹切线方向和分离的位移矢量是同向的，可用初始这一段的运动来拟合平动。代码：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">linkage_move</span><span class="params">()</span><span class="comment">//离散化的直线运动，用于三坐标匀速联动和直线点跟随</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	digitalWrite(ENABLE_PIN, LOW);<span class="comment">//启动步进电机</span></span><br><span class="line">	<span class="keyword">if</span>(delta_units[X]==<span class="number">0</span>&amp;&amp;delta_units[Y]==<span class="number">0</span>)</span><br><span class="line">		distance = delta_units[A];</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		distance = <span class="built_in">sqrt</span>(delta_units[X]*delta_units[X] + delta_units[Y]*delta_units[Y] );</span><br><span class="line">	<span class="keyword">long</span> steps=distance/section;</span><br><span class="line">	<span class="keyword">float</span> seg_x=(target_units[X]-current_units[X])/steps;</span><br><span class="line">	<span class="keyword">float</span> seg_y=(target_units[Y]-current_units[Y])/steps;</span><br><span class="line">	<span class="keyword">float</span> seg_a=(target_units[A]-current_units[A])/steps;<span class="comment">//以距离为基准分片</span></span><br><span class="line">	<span class="keyword">int</span> acc,fi,in;</span><br><span class="line">	fi=(<span class="number">100000</span>/steps) *(distance/feedrate);<span class="comment">//步进电机步长与距离步长成比例</span></span><br><span class="line">	in=(<span class="number">100000</span>/steps) *(distance/<span class="number">10</span>);</span><br><span class="line">	interval_time=in;</span><br><span class="line">	acc=(in-fi)/<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> s=<span class="number">0</span>;s&lt;steps;s++)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="keyword">if</span>(s&lt;steps-acc)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(s&lt;acc)</span><br><span class="line">				interval_time--;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(interval_time&lt;in)</span><br><span class="line">				interval_time++;    </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(point_follow)</span><br><span class="line">		&#123;</span><br><span class="line">			fp[A]=<span class="built_in">atan2</span>((follow_point[Y]-current_units[Y]),(follow_point[X]-current_units[X]))*R2D+<span class="number">90</span>;</span><br><span class="line">			set_target(current_units[X]+seg_x, current_units[Y]+seg_y, fp[A]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>	</span><br><span class="line">			set_target(current_units[X]+seg_x, current_units[Y]+seg_y, current_units[A]+seg_a);</span><br><span class="line">		discrete_move();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="点跟随"><a href="#点跟随" class="headerlink" title="点跟随"></a>点跟随</h2><p>点跟随就是在进行平动的同时，姿态保持和绝对坐标中的某个点有固定的关系。方法同样是将运动离散化，对每一个离散点计算能满足固定定关系的姿态。这里我让机器人平动的同时，机器人的y轴始终过我给定的点，对于每个离散点：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fp[A]=<span class="built_in">atan2</span>((follow_point[Y]-current_units[Y]),(follow_point[X]-current_units[X]))*R2D+<span class="number">90</span>;</span><br><span class="line"><span class="comment">//follow_point[X]、follow_point[Y]是要跟随的点</span></span><br><span class="line"><span class="comment">//根据当前的坐标计算满足机器人y轴过跟随点的姿态</span></span><br><span class="line">set_target(current_units[X]+seg_x, current_units[Y]+seg_y, fp[A]);</span><br></pre></td></tr></table></figure></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>其他的运动方式也都可以通过离散化运动的方式去实现</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag"># 项目</a>
+          
+            <a href="/tags/全方位移动机器人/" rel="tag"># 全方位移动机器人</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/03/micropython上手/" rel="next" title="nodemcu-micropython上手">
+                <i class="fa fa-chevron-left"></i> nodemcu-micropython上手
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/06/使用欧拉方程解SCARA/" rel="prev" title="使用欧拉方程解SCARA">
+                使用欧拉方程解SCARA <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="YANG" />
+            
+              <p class="site-author-name" itemprop="name">YANG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#速度反解"><span class="nav-number">1.</span> <span class="nav-text">速度反解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#位姿反解"><span class="nav-number">2.</span> <span class="nav-text">位姿反解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高级运动"><span class="nav-number">3.</span> <span class="nav-text">高级运动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坐标反解的运动轨迹"><span class="nav-number">3.1.</span> <span class="nav-text">坐标反解的运动轨迹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#点跟随"><span class="nav-number">3.2.</span> <span class="nav-text">点跟随</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">3.3.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YANG</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

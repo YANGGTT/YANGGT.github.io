@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="项目,机械臂," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="(未完) 上个学期做了一个六轴的机械臂，当时还只能做到四自由联动，由于种种原因，最近才终于把这个坑填上了。虽然还无法做到像RTCP这样高级的运动，但是已经可以做定姿态的插补了，勉强能算6轴联动了吧。  对于关节机器人的运动学求解一般分为两个部分，一是已知各个关节角求末端执行机构的位姿，这称为正运动学；另一个是给定执行机构的位姿求各个关节角。正运动学比较简单，而且只有唯一解，而逆运动学就比较复杂并且">
+<meta name="keywords" content="项目,机械臂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6轴机械臂的快速实现">
+<meta property="og:url" content="http://yoursite.com/2018/05/30/6轴机械臂的运动学实现/index.html">
+<meta property="og:site_name" content="YANG">
+<meta property="og:description" content="(未完) 上个学期做了一个六轴的机械臂，当时还只能做到四自由联动，由于种种原因，最近才终于把这个坑填上了。虽然还无法做到像RTCP这样高级的运动，但是已经可以做定姿态的插补了，勉强能算6轴联动了吧。  对于关节机器人的运动学求解一般分为两个部分，一是已知各个关节角求末端执行机构的位姿，这称为正运动学；另一个是给定执行机构的位姿求各个关节角。正运动学比较简单，而且只有唯一解，而逆运动学就比较复杂并且">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-01T10:57:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="6轴机械臂的快速实现">
+<meta name="twitter:description" content="(未完) 上个学期做了一个六轴的机械臂，当时还只能做到四自由联动，由于种种原因，最近才终于把这个坑填上了。虽然还无法做到像RTCP这样高级的运动，但是已经可以做定姿态的插补了，勉强能算6轴联动了吧。  对于关节机器人的运动学求解一般分为两个部分，一是已知各个关节角求末端执行机构的位姿，这称为正运动学；另一个是给定执行机构的位姿求各个关节角。正运动学比较简单，而且只有唯一解，而逆运动学就比较复杂并且">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/30/6轴机械臂的运动学实现/"/>
+
+
+
+
+
+  <title>6轴机械臂的快速实现 | YANG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YANG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/30/6轴机械臂的运动学实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YANG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YANG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">6轴机械臂的快速实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-30T00:00:00+08:00">
+                2018-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="未完"><a href="#未完" class="headerlink" title="(未完)"></a>(未完)</h1><blockquote>
+<p>上个学期做了一个六轴的机械臂，当时还只能做到四自由联动，由于种种原因，最近才终于把这个坑填上了。虽然还无法做到像RTCP这样高级的运动，但是已经可以做定姿态的插补了，勉强能算6轴联动了吧。</p>
+</blockquote>
+<p><strong>对于关节机器人的运动学求解一般分为两个部分，一是已知各个关节角求末端执行机构的位姿，这称为正运动学；另一个是给定执行机构的位姿求各个关节角。正运动学比较简单，而且只有唯一解，而逆运动学就比较复杂并且存在多解。在求解之前要先建立关节机器人的D-H模型，当D-H参数确定后，正运动学也很容易就能得到了。而对于逆运动学的求解通常有两种，一种是数值解，另一种是闭式解。数值解是利用迭代去求得各个关节角，使得对应的位姿收敛于目标值，matlab中的ikine函数就是这样的一种方法；而闭式解则是直接确定位姿到关节角的映射关系，直接使用关系式求解。虽然闭式解的实时计算量比数值解更少，运用也更灵活，但是有些机械臂是不存在闭式解的，而且数值解更具有通用性，只要确立好D-H模型，剩下的事基本上就交给处理器了。arduino上实现的话最好还是闭式解。</strong></p>
+<p><strong>这里我做的机械臂是一种带有球形手腕的机械臂，也是工业上最常见的6轴结构，由于球形手腕的特殊性，机械臂的运动学是可解耦的，并且可以求闭式解。</strong></p>
+<h1 id="运动学基础"><a href="#运动学基础" class="headerlink" title="运动学基础"></a>运动学基础</h1><p>三自由度比如uarm这样的机械臂的求解可以完全用几何方法实现，但是如果又多了三个自由度，就涉及到姿态的求解，姿态相对于坐标来说会比较抽象一些，所以还是得用一些运动学方法。（前面说不需要很多机器人学的知识，意思是还是需要一些的啦）</p>
+<h2 id="坐标描述和平移变换"><a href="#坐标描述和平移变换" class="headerlink" title="坐标描述和平移变换"></a>坐标描述和平移变换</h2><p>坐标的描述其实不需要过多的解释了，就是我们平时理解的（x,y,z）。但需要补充的是，在机器人学中（x,y,z）并不是表示一个点，而是一个过原点的向量。</p>
+<p>假设我们有一个绝对坐标系（基坐标系）{A}，可以用$^Ap_B=(x,y,z)$来表示姿态和{A}系相同的坐标系{B}的位置$^Ap_B$表示{B}系的原点在{A}系中的位置，也称做平移变换。利用这个平移变换可以建立起两个坐标系之间的映射。<br>对于空间上的任意一点p，已知在{A}系中的坐标$^Ap$，{B}系中的坐标$^Bp$,并且{A}系和{B}系的各坐标轴平行，{B}系相对于{A}系的位置$^Ap_B$，则有如下映射关系：<br>$$<br>^Ap=^Bp+^Ap_B<br>$$</p>
+<h2 id="姿态描述和旋转变换"><a href="#姿态描述和旋转变换" class="headerlink" title="姿态描述和旋转变换"></a>姿态描述和旋转变换</h2><p>对于空间中一个刚体的姿态，通常使用一个旋转矩阵（变换）来描述。假设一直角坐标系{B}和刚体固连，则可以用</p>
+<p>$$<br>^A_BR=[^Ax_B,^Ay_B,^Az_B]=\begin{bmatrix}<br>r1 &amp;r2  &amp;r3 \\<br> r4 &amp;r5  &amp;r6 \\<br> r7&amp; r8 &amp;r9<br>\end{bmatrix}<br>$$<br>来表示{B}系相对于{A}系的姿态，其中矩阵的每一列表示的是{B}系的各基底在{A}系中的位置，并且这个矩阵是一个正交矩阵（满足$R^{-1}=R^{T}$）。同样的对于对于空间上的任意一点p，已知在{A}系中的坐标$^Ap$，{B}系中的坐标$^Bp$,{B}系相对于{A}系的姿态$^A_BR$，并且{A}系和{B}系有共同的原点，则{B}系到{A}系的映射：</p>
+<p>$$<br>^Ap=^A_BR\cdot^Bp<br>$$<br>事实上，坐标系之间的映射关系其实就是一个交换基底的过程，比如上面的B系到A系的姿态映射，就可以理解成：空间点在A系中的位置=A系基底在B系中的位置X空间点在B系中的位置。</p>
+<h2 id="位姿描述"><a href="#位姿描述" class="headerlink" title="位姿描述"></a>位姿描述</h2><p>可以把旋转变换和平移变换合在一起写成一个用来描述坐标系位姿的齐次矩阵：<br>$$<br>^A_BT=\begin{bmatrix}<br>^A_BR&amp; ^Ap_B\\<br>0,0, 0&amp;1<br>\end{bmatrix}<br>$$<br>同样有映射关系：<br>$$<br>^Ap=^A_BT\cdot^Bp<br>$$<br>不过这里为了使矩阵的运算能够完成，坐标p要写成：<br>$$<br>p=\begin{bmatrix}<br>p\\<br>1<br>\end{bmatrix}<br>$$</p>
+<h2 id="姿态的参数化描述"><a href="#姿态的参数化描述" class="headerlink" title="姿态的参数化描述"></a>姿态的参数化描述</h2><p>使用旋转矩阵虽然能够描述一个刚体的姿态，但是非常不直观，而且刚体的姿态只有3个自由度，却需要用9个量的矩阵来描述。所以就有了相对比较直观的姿态描述方法欧拉角和RPY角。这两种描述方法都是利用三次特定的旋转来描述姿态的，最终的姿态矩阵可以通过三次旋转的角度和次序求得。</p>
+<h3 id="欧拉角："><a href="#欧拉角：" class="headerlink" title="欧拉角："></a>欧拉角：</h3><p>对于坐标系A和B，假设初始时刻各个轴是重合的，首先让B系绕B系的Z轴$Z_B$轴旋转$\alpha$，再绕$Y_B$轴旋转$\beta$，最后$X_B$轴旋转$\gamma$，这称作z-y-x欧拉角。更换不同的选转顺序比如x-y-z,z-y-z，也都称做欧拉角，但每次旋转必须相对于动系的坐标轴，即这里的B系。</p>
+<h3 id="RPY角："><a href="#RPY角：" class="headerlink" title="RPY角："></a>RPY角：</h3><p>和欧拉角类似，但是RPY角每次的旋转是相对于定系，即A系的坐标轴旋转的。</p>
+<h3 id="欧拉角对应的姿态矩阵"><a href="#欧拉角对应的姿态矩阵" class="headerlink" title="欧拉角对应的姿态矩阵"></a>欧拉角对应的姿态矩阵</h3><p>这里以z-y-z欧拉角为例，根据旋转方式（绕动系）和旋转次序（先绕z转$\alpha$,再绕y转$\beta$，最后再绕z转$\gamma$），可以依次乘上（右乘）每次旋转对应的基本旋转矩阵，得到z-y-z欧拉角对应的姿态矩阵：<br>$$<br>^A_BR_{zyz}(\alpha,\beta,\gamma)=\begin{bmatrix}<br>c\alpha c\beta c\gamma-s\alpha s\gamma &amp;-c\alpha c\beta s\gamma-s\alpha c\gamma  &amp;c\alpha s\beta \\<br>s\alpha c\beta c\gamma+c\alpha s\gamma&amp;-s\alpha c\beta s\gamma+c\alpha c\gamma   &amp;s\alpha s\beta \\<br> -s\beta c\gamma&amp; s\beta s\gamma &amp;c\beta<br>\end{bmatrix}<br>$$</p>
+<h3 id="旋转矩阵到欧拉角的转换"><a href="#旋转矩阵到欧拉角的转换" class="headerlink" title="旋转矩阵到欧拉角的转换"></a>旋转矩阵到欧拉角的转换</h3><p>同样以z-y-z欧拉角为例，如果给定旋转矩阵<br>$$<br>R=\begin{bmatrix}<br>r_{11} &amp; r_{12}&amp;r_{13} \\<br>r_{21}&amp;r_{22}   &amp;r_{23} \\<br> r_{31}&amp; r_{32}&amp;r_{33}<br>\end{bmatrix}<br>$$<br>可求得对应的z-y-z$(\alpha-\beta-\gamma)$欧拉角:</p>
+<p>当$sin\beta&gt;0$时：<br>$$<br>\beta=atan2(\sqrt{1-r_{33}^2}，r_{33}) \\<br>\alpha=atan2(r_{23}，r_{13}) \\<br>\gamma=atan2(r_{32}，-r_{31})<br>$$</p>
+<p>当$sin\beta&lt; 0$时：</p>
+<p>$$<br>\beta=atan2(-\sqrt{1-r_{33}^2}，r_{33}) \\<br>\alpha=atan2(-r_{23}，-r_{13}) \\<br>\gamma=atan2(-r_{32}，r_{31})<br>$$<br><strong>其他形式的欧拉角都可以使用基本旋转矩阵得到，从旋转矩阵中提取欧拉角的方法也是类似的，这里就不再列举了</strong></p>
+<h2 id="球形手腕的特点"><a href="#球形手腕的特点" class="headerlink" title="球形手腕的特点"></a>球形手腕的特点</h2><p>球形手腕和普通的球坐标系统类似，但不同的是把球坐标系统下唯一的移动副也换成了转动副。球形手腕的三组连杆依次串联，如果定义一个合理的坐标系，固连在手腕末端的刚体的欧拉角或rpy角可以直接反映在各个关节的角度上。（从基座开始依次旋转各个关节对应的是欧拉角，从末端开始额话则对应的是rpy角）。如图，从基座向手腕末端，以此定义各个关节为A、B、C。假设初始时（关节角为0时）各个关节转轴两两垂直，此时手腕末端刚体的坐标系和手腕的坐标系是重合的（虽然这里还没定义），若定义此时的A关节转轴为Z轴，B、C关节转轴对应为Y轴和X轴，手腕的坐标系是固定的，而刚体的坐标系固连在手腕末端，依次旋转A、B、C三个关节（实际上与旋转顺序无关，但按照这个顺序容易理解），会发现A、B、C三个关节的角度对应的就是刚体在手腕坐标系下的z-y-x欧拉角。如果初始时刻，A、C转轴共线，B与它们垂直，定义A、C转轴为Z轴，B转轴为Y轴，则A、B、C三个关节的角度对应的是刚体在手腕坐标系下的z-y-z欧拉角。球形手腕的这一特点大大简化了机械臂运动动学的求解。</p>
+<h1 id="连杆坐标系"><a href="#连杆坐标系" class="headerlink" title="连杆坐标系"></a>连杆坐标系</h1><p>D-H模型中要对每一个连杆建立坐标系，然后确定D-H参数，但这里运动学的求解我不采用D-H方法，所以只规定必要的几个坐标系和参数。对于各个电机的命名从基座开始到末端执行机构依次为Z、X、Y、A、B、C。当手腕各个关节角度为0时，如图所示。</p>
+<table>
+<thead>
+<tr>
+<th>坐标系</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基坐标系</td>
+<td>{O}</td>
+</tr>
+<tr>
+<td>手腕关节坐标系</td>
+<td>{F}</td>
+</tr>
+<tr>
+<td>工具坐标系</td>
+<td>{T}</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基座关节角</td>
+<td>Az</td>
+</tr>
+<tr>
+<td>大臂关节角</td>
+<td>Ax</td>
+</tr>
+<tr>
+<td>小臂关节角</td>
+<td>Ay</td>
+</tr>
+<tr>
+<td>A电机关节角A</td>
+<td>A</td>
+</tr>
+<tr>
+<td>B电机关节角</td>
+<td>B</td>
+</tr>
+<tr>
+<td>C电机关节角</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>固定参数</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大臂长度</td>
+<td>L1</td>
+</tr>
+<tr>
+<td>小臂长度</td>
+<td>L2</td>
+</tr>
+<tr>
+<td>手腕转轴和小臂的角度偏置</td>
+<td>$\Delta$</td>
+</tr>
+<tr>
+<td>工具偏置</td>
+<td>h</td>
+</tr>
+</tbody>
+</table>
+<p>*ps:对于不同的机械臂，连杆和连杆之间的偏置也会有所不同，我的机械臂只有小臂和手腕之间存在一个角度偏置。在能够适应所有工具的情况下工具偏置应该是有6个参数（其实三个就够了）的，这里我简化了一下，规定机器人的工具只有沿着手腕转轴方向的偏置。</p>
+<p>需要注意的是:定义坐标系和一些参数时应该充分利用球形手腕的特点。所有坐标系都应该严格遵循右手坐标系，角度逆时针为正。</p>
+<h1 id="正运动学"><a href="#正运动学" class="headerlink" title="正运动学"></a>正运动学</h1><p>思路：先求出手腕中心的坐标，再求解绝对坐标下的z-y-z欧拉角，最后根据工具偏置和欧拉角求出实际坐标</p>
+<h2 id="1-手腕坐标系的位姿"><a href="#1-手腕坐标系的位姿" class="headerlink" title="1.手腕坐标系的位姿"></a>1.手腕坐标系的位姿</h2><p>在柱坐标下考虑前三组连杆，极角等于基座的关节角Az，极径R  和高度（z坐标）可由大臂和小臂组成的二杆机构确定。<br>在大臂和小臂所在的平面内：<br>$$<br>R=L_1cosA_x+L_2cos(A_x-A_y) \\<br>z=L_1sinA_x+L_2sin(A_x-A_y)<br>$$<br>进而：<br>$$<br>x=RcosA_z \\<br>y=RsinA_z<br>$$<br>得到手腕坐标系的平移变换：</p>
+<p>$$<br>^Op_F=[x,y,z]^T<br>$$</p>
+<p>观察可以发现手腕固连在小臂上，前三组连杆的转动导致手腕的欧拉角发生变化，满足z-y-z欧拉角的三次转动分别为：<br>$$<br>第一次绕z轴：\alpha=A_z \\<br>第二次绕y轴：\beta=A_y-A_x+\pi/2+\Delta \\<br>第三次绕z轴: 不旋转或为0<br>$$<br>进而得到手腕坐标系对应的姿态矩阵：<br>$$<br>^O_FR=\begin{bmatrix}<br>c\alpha c\beta  &amp;-s\alpha &amp;c\alpha s\beta \\<br>s\alpha c\beta &amp;c\alpha   &amp;s\alpha s\beta \\<br> -s\beta&amp; 0&amp;c\beta<br>\end{bmatrix}<br>$$ </p>
+<p>最后得到手腕坐标的姿态矩阵：<br>$$<br>^O_FT=\begin{bmatrix}<br>^O_FR&amp; ^Op_F\\<br>0,0, 0&amp;1<br>\end{bmatrix}<br>$$</p>
+<p>##2.工具坐标系相对于手腕的位姿<br>根据球形手腕的特点，工具在手腕坐标系下的z-y-z欧拉角对应的旋转矩阵为：<br>$$^F_TR=R_{zyz}(A,B,C)$$</p>
+<p>根据工具的偏置可写出当手腕各个关节角为0时工具在手腕坐标系下的位置:<br>$$<br>^{F0}p_T=\begin{bmatrix}<br>0  \\<br>0  \\<br>h<br>\end{bmatrix}<br>$$</p>
+<p>当手腕各关节转过一定角度时，工具相对于手腕的坐标可以用这个初始坐标$^{F0}p_T$经过相应的旋转变换得到：<br>$$<br>^Fp_T=^F_TR\cdot^{F0}p_T<br>$$</p>
+<p>最后得到工具在手腕坐标系下的姿态矩阵:</p>
+<p>$$<br>^F_TT=\begin{bmatrix}<br>^F_TR&amp; ^Fp_T\\<br>0,0, 0&amp;1<br>\end{bmatrix}<br>$$</p>
+<h2 id="3-工具的绝对位姿"><a href="#3-工具的绝对位姿" class="headerlink" title="3.工具的绝对位姿"></a>3.工具的绝对位姿</h2><p>由：<br>$$<br>^O_TT=^O_FT \cdot^F_TT<br>$$<br>可得：<br>$$<br>^O_TR=^O_FR \cdot^F_TR \\<br>^Op_T=^O_F \cdot ^Fp_T+^Op_F=^O_TR\cdot^{F0}p_T+^Op_F<br>$$<br>到这里就实了典型的6轴机械臂的正运动学了。细节部分就再展开算了，怕算错。（其实我的机械臂没有用到非常完整的正解@_@）</p>
+<p>相比于D-H这么做正运动学其实不是特别好。虽然D—H方法在实现的过程中计算和步骤可能会更多一些（得到的结果是一样的），但是D-H方法条理会更加清晰，并且具有通用性。</p>
+<h1 id="逆运动学"><a href="#逆运动学" class="headerlink" title="逆运动学"></a>逆运动学</h1><p>之前做过一些三坐标结构的机械臂，比如SCARA，类似uarm结构的机械臂。这些机械臂末端工具的姿态是不可控的，只需求解三个关节角和三个坐标之间的关系，用简单的几何方法就能实现。但是当再引入三个关节使机器人工具的姿态可控时，问题就变得复杂了。所以为了方便实现，可以把手臂和手腕分开来考虑，这种方法称作运动解耦。</p>
+<p>大致的思路是这样的：给定末端工具的位姿，先根据姿态计算出手腕坐标系的位置，接着可以计算出手臂三个关节的角度，进而得到手腕坐标系的姿态，结合手腕的姿态和给定的姿态可以计算出工具在手腕坐标下的姿态，转换成欧拉角就是对应的三个手腕关节的角度。</p>
+<h2 id="手腕坐标系的位置"><a href="#手腕坐标系的位置" class="headerlink" title="手腕坐标系的位置"></a>手腕坐标系的位置</h2><p>首先把给定的绝对坐标下的欧拉角转化成姿态矩阵$^O_TR$，已知$^Op_T=[x,y,z]^T$由正运动学中得到的结果很容易得到：<br>$$<br>^Op_F=[x_F,y_F,z_F]^T=^Op_T-^O_TR \cdot ^{F0}p_T<br>$$<br>这里就不再求解啦，打公式挺麻烦的@_@</p>
+<h2 id="手臂关节角的求解"><a href="#手臂关节角的求解" class="headerlink" title="手臂关节角的求解"></a>手臂关节角的求解</h2><p>与正解的思路一样，在柱坐标下考虑,先计算极径R和极角$\theta$,这里的极径就是$A_z$得角度<br>$$<br>R=\sqrt{x^2+y^2} \\<br>\theta=A_z=atan2(y,x)<br>$$</p>
+<p>然后在两手臂所在的平面内考虑这个平面二连杆机构，如图连接手腕原点和基坐标系原点，由余弦定理有：<br>$$<br>L1^2+L2^2-2L1\cdot L2cos(180-A_y)=R^2+z^2<br>$$<br>这里可以解出$cosA_y$,不过还需要计算$sinA_y$然后再用双参反正切atan2()。所以可以看到这里的$sinA_y$实际上是有两个解的。</p>
+<p>接下来求解$A_x$,如图作L1的延长线，并过手腕原点作L1的垂线交于K，可以计算出角KOF：<br>$$<br>\angle KOF=atan2(L2sinA_y,L1+L2cosA_y)<br>$$<br>最后可以得到$A_x$:<br>$$<br>A_x=\angle KOF-atan2(z,R)<br>$$</p>
+<h2 id="手腕关节角的求解"><a href="#手腕关节角的求解" class="headerlink" title="手腕关节角的求解"></a>手腕关节角的求解</h2><p>当手臂的关节角求出后，运用正运动学中的结论，可以得到手腕坐标系的姿态$^O_FR$。再由：<br>$$<br>^O_TR=^O_FR \cdot^F_TR \\<br>^F_TR=R_{zyz}(A,B,C)<br>$$<br>可计算出手腕的三个关节角。因为这里的$^O_FR$是正交矩阵，满足$^O_FR^{-1}=^O_FR^T$，所以反解方程时会简单很多。将姿态矩阵转换成欧拉角时会有两个解。</p>
+<p>有些步骤就不再展开算了。其实在我的机械臂上，只能做几种特殊姿态的插补。因为arduino的性能实在够呛。</p>
+<h1 id="关节空间规划"><a href="#关节空间规划" class="headerlink" title="关节空间规划"></a>关节空间规划</h1><p>通常驱动机械臂运动的方式有两种，一种是直接让机械臂到达我们给定的位置，中间的轨迹我们不关心（有时需要绕开几个干涉点），这种方式就是p2p(point to point)，另外一种是要让机械臂按照我们特定的轨迹运动，这种方式是后面要讲到的插补。</p>
+<p>对于p2p，过程是比较简单的，给定目标位姿，逆运动学求各个关节角，最后直接驱动电机输出相应的角度。当然中间还会有一些小问题。比如如何实现多个电机（这里特指步进电机）的同时转动，毕竟如果依次转动的话时间代价是比较高的。</p>
+<h2 id="电机的联动"><a href="#电机的联动" class="headerlink" title="电机的联动"></a>电机的联动</h2><p>实际上如果把机械臂的每个电机对应到直角坐标系统中的各轴电机，会发现其实实现几个关节的联动就是去实现对应直角坐标系统中的插补。这也也是p2p也叫关节空间规划的原因了。</p>
+<p>在程序只有一个控制流程的情况下,要实现多个关节的联动，就必须把各个电机的运动离散化，一会儿转这个电机，一会儿转另外一个，最终在宏观上看，几个电机好像就是同时转的。这就类似于多任务的调度分配。在实现的时候可以用定时器中断，也可以不用，如果用定时器中断的话，在运动过程中的这一段时间，你还可以用单片机做其他事，毕竟运动过程相对于单片机的处理速度实在是太长了。</p>
+<p>比较简单的运动离散的方式有这么两种（我只知道这两种@_@）：<br>1.直接等分各个电机的运动，再交替输出。<br>2.栅格化步进，比如bresenham、dda。</p>
+<p>用的比较多的应该还是bresenham。当然了，这里只讨论了最最简单的联动，一些绕开干涉点的关节规划还没有讨论。</p>
+<h2 id="加减速"><a href="#加减速" class="headerlink" title="加减速"></a>加减速</h2><p>对于关节机械臂来说，加减速是非常重要的。因为刚度本身就小，又还是串联开式机构，连杆细微的抖动反映到末端工具上都会是致命的。我的机械臂，在没有加减速的情况下，插补的时候末端能有几mm幅度的抖动@_@。</p>
+<p>关节空间规划的加减速就不再这里细说了，可以用leib梯形加减速，也可以用我的土办法，或者如果单片机性能够的话，用更高质量的S型加减速。</p>
+<h1 id="插补"><a href="#插补" class="headerlink" title="插补"></a>插补</h1><h2 id="直线插补"><a href="#直线插补" class="headerlink" title="直线插补"></a>直线插补</h2><p>有了上面的铺垫，插补的实现也就不难了。以直线为例，在直线上依次取多个离散点，对于每个点都用p2p的方式到达，最终的运动轨迹就可以近似一条直线。对于离散点的选取可以根据需要的插补精度，或者是单位时间的计算次数去选取。因为，每一个离散点都要计算一次反解，所以插补的代价还是很高的。</p>
+<h2 id="圆弧插补"><a href="#圆弧插补" class="headerlink" title="圆弧插补"></a>圆弧插补</h2><p>和直线插补类似。</p>
+<h2 id="插补的优化"><a href="#插补的优化" class="headerlink" title="插补的优化"></a>插补的优化</h2><p>这里是一些个人的想法，但还没去实现。可以看到前面的插补运动经过了两次离散过程，一次p2p的，一次轨迹离散点的，感觉上就是有些浪费的。如果能找到轨迹对应的各关节的运动曲线，找到轨迹对应的各个电机之间的步进关系，利用栅格步进的方法，那这个过程就可以只进行一次离散。当然了，可行性还需要验证。</p>
+<h2 id="插补的加减速"><a href="#插补的加减速" class="headerlink" title="插补的加减速"></a>插补的加减速</h2><p>对插补轨迹的每个离散点，使用前面提到leib就能实现插补的加减速了。但是这里的加减速曲线对应的是末端执行工具的加减速情况，而不是各个关节的加减速状态。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag"># 项目</a>
+          
+            <a href="/tags/机械臂/" rel="tag"># 机械臂</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/06/步进电机加减速的设计/" rel="next" title="步进电机加减速的设计">
+                <i class="fa fa-chevron-left"></i> 步进电机加减速的设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="YANG" />
+            
+              <p class="site-author-name" itemprop="name">YANG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#未完"><span class="nav-number">1.</span> <span class="nav-text">(未完)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运动学基础"><span class="nav-number">2.</span> <span class="nav-text">运动学基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坐标描述和平移变换"><span class="nav-number">2.1.</span> <span class="nav-text">坐标描述和平移变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#姿态描述和旋转变换"><span class="nav-number">2.2.</span> <span class="nav-text">姿态描述和旋转变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位姿描述"><span class="nav-number">2.3.</span> <span class="nav-text">位姿描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#姿态的参数化描述"><span class="nav-number">2.4.</span> <span class="nav-text">姿态的参数化描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#欧拉角："><span class="nav-number">2.4.1.</span> <span class="nav-text">欧拉角：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPY角："><span class="nav-number">2.4.2.</span> <span class="nav-text">RPY角：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欧拉角对应的姿态矩阵"><span class="nav-number">2.4.3.</span> <span class="nav-text">欧拉角对应的姿态矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转矩阵到欧拉角的转换"><span class="nav-number">2.4.4.</span> <span class="nav-text">旋转矩阵到欧拉角的转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#球形手腕的特点"><span class="nav-number">2.5.</span> <span class="nav-text">球形手腕的特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连杆坐标系"><span class="nav-number">3.</span> <span class="nav-text">连杆坐标系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正运动学"><span class="nav-number">4.</span> <span class="nav-text">正运动学</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-手腕坐标系的位姿"><span class="nav-number">4.1.</span> <span class="nav-text">1.手腕坐标系的位姿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-工具的绝对位姿"><span class="nav-number">4.2.</span> <span class="nav-text">3.工具的绝对位姿</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逆运动学"><span class="nav-number">5.</span> <span class="nav-text">逆运动学</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#手腕坐标系的位置"><span class="nav-number">5.1.</span> <span class="nav-text">手腕坐标系的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手臂关节角的求解"><span class="nav-number">5.2.</span> <span class="nav-text">手臂关节角的求解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手腕关节角的求解"><span class="nav-number">5.3.</span> <span class="nav-text">手腕关节角的求解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关节空间规划"><span class="nav-number">6.</span> <span class="nav-text">关节空间规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#电机的联动"><span class="nav-number">6.1.</span> <span class="nav-text">电机的联动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加减速"><span class="nav-number">6.2.</span> <span class="nav-text">加减速</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插补"><span class="nav-number">7.</span> <span class="nav-text">插补</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#直线插补"><span class="nav-number">7.1.</span> <span class="nav-text">直线插补</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#圆弧插补"><span class="nav-number">7.2.</span> <span class="nav-text">圆弧插补</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插补的优化"><span class="nav-number">7.3.</span> <span class="nav-text">插补的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插补的加减速"><span class="nav-number">7.4.</span> <span class="nav-text">插补的加减速</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YANG</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
