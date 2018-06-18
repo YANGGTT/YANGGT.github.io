@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="项目,减速器," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="对于关节机器人（机械臂），减速器可以说是非常关键的部件，减速器的好坏直接影响了机械臂的精度和性能。而好的减速器价格也非常高，自己做机械臂的话根本用不起（买一个减速器就够做好几台玩具机械臂了）。所以自己尝试着做了一个谐波减速器，有一台激光切割机和一台3d打印机就能做。  减速器减速器的指标有很多，比如传递力矩、效率、减速比、紧凑程度、背隙、传动比稳定性、寿命等等。对于玩具（桌面级）机械臂来说，我们">
+<meta name="keywords" content="项目,减速器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自制谐波减速器">
+<meta property="og:url" content="http://yoursite.com/2018/06/10/低成本谐波减速器/index.html">
+<meta property="og:site_name" content="YANG">
+<meta property="og:description" content="对于关节机器人（机械臂），减速器可以说是非常关键的部件，减速器的好坏直接影响了机械臂的精度和性能。而好的减速器价格也非常高，自己做机械臂的话根本用不起（买一个减速器就够做好几台玩具机械臂了）。所以自己尝试着做了一个谐波减速器，有一台激光切割机和一台3d打印机就能做。  减速器减速器的指标有很多，比如传递力矩、效率、减速比、紧凑程度、背隙、传动比稳定性、寿命等等。对于玩具（桌面级）机械臂来说，我们">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/e8d4eb99ly1fsfj50ahqhj217q0kuah2.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fsfi6726bbj21kw16owx0.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/e8d4eb99gy1fsfi6b4oe0j21kw23ukjl.jpg">
+<meta property="og:updated_time" content="2018-06-18T11:01:43.897Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自制谐波减速器">
+<meta name="twitter:description" content="对于关节机器人（机械臂），减速器可以说是非常关键的部件，减速器的好坏直接影响了机械臂的精度和性能。而好的减速器价格也非常高，自己做机械臂的话根本用不起（买一个减速器就够做好几台玩具机械臂了）。所以自己尝试着做了一个谐波减速器，有一台激光切割机和一台3d打印机就能做。  减速器减速器的指标有很多，比如传递力矩、效率、减速比、紧凑程度、背隙、传动比稳定性、寿命等等。对于玩具（桌面级）机械臂来说，我们">
+<meta name="twitter:image" content="http://wx2.sinaimg.cn/mw690/e8d4eb99ly1fsfj50ahqhj217q0kuah2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/10/低成本谐波减速器/"/>
+
+
+
+
+
+  <title>自制谐波减速器 | YANG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YANG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/10/低成本谐波减速器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YANG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YANG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自制谐波减速器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-10T00:00:00+08:00">
+                2018-06-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>对于关节机器人（机械臂），减速器可以说是非常关键的部件，减速器的好坏直接影响了机械臂的精度和性能。而好的减速器价格也非常高，自己做机械臂的话根本用不起（买一个减速器就够做好几台玩具机械臂了）。所以自己尝试着做了一个谐波减速器，有一台激光切割机和一台3d打印机就能做。</p>
+</blockquote>
+<h1 id="减速器"><a href="#减速器" class="headerlink" title="减速器"></a>减速器</h1><p>减速器的指标有很多，比如传递力矩、效率、减速比、紧凑程度、背隙、传动比稳定性、寿命等等。对于玩具（桌面级）机械臂来说，我们一般只关心减速比、是否足够紧凑、还有背隙。大减速比可以提高传动的分辨率和力矩，紧凑程度决定了机械臂的设计难度和美观，背隙的话影响着机械臂的重复定位精度。其他的参数比如传递力矩，可以跟据电机和减速比简单估算，可以调整减速比来增大输出力矩，同时也要简单估算一下齿轮的受力，一般小机械臂是不会出现断齿的情况。至于效率、寿命，嗯，低一点也不是不能用&amp;_&amp;。还有传动比稳定性，这个真的很难保证，毕竟自己做的东西，消个背隙都要死要活了。</p>
+<p>下面简单介绍一些减速器，好说明我为什么要选谐波来做@_@。</p>
+<h2 id="普通齿轮减速"><a href="#普通齿轮减速" class="headerlink" title="普通齿轮减速"></a>普通齿轮减速</h2><p>最常见的减速方式了，多级齿轮的减速比可以做得很大，也可以做得很紧凑，比如舵机。但是减速比越大背隙也越大，一级一级累计的，甚至有时候两级齿轮减速的背隙就已经无法接受了。所以做机械臂基本上不会考虑用齿轮减速了。（如果只用一级减速的话还是可以的，但是减速比不高）</p>
+<h2 id="螺旋-斜-人字齿轮减速"><a href="#螺旋-斜-人字齿轮减速" class="headerlink" title="螺旋/斜/人字齿轮减速"></a>螺旋/斜/人字齿轮减速</h2><p>和普通齿轮一样，只是在间隙的控制上会有些改善，受力也有一些不太一样，啮合的过程会平稳些。但是级数多的话还是不可避免地会出现大间隙。</p>
+<h2 id="涡轮蜗杆减速"><a href="#涡轮蜗杆减速" class="headerlink" title="涡轮蜗杆减速"></a>涡轮蜗杆减速</h2><p>减速比大，并且很紧凑，但是效率低，易磨损，并且间隙也比较大。虽然有滚珠涡轮蜗杆，也有消间隙的涡轮蜗杆，但是基本上买不到可以用在小机械臂上的。自己设计自己做的话，又很难有加工条件（别跟我说3d打印@_@，打出来能顺畅地转就很不错了）。</p>
+<h2 id="带轮-同步带轮减速"><a href="#带轮-同步带轮减速" class="headerlink" title="带轮/同步带轮减速"></a>带轮/同步带轮减速</h2><p>特点就是背隙小，但是要想做到大减速比，结构就会变得很大，而且多级带轮中心距的确定还有张紧等也是一些不利于设计的小问题。我之前做的机械臂都是用一级同步带轮减速的。除了减速比小一点，其他都挺好的。</p>
+<h2 id="绳驱动减速"><a href="#绳驱动减速" class="headerlink" title="绳驱动减速"></a>绳驱动减速</h2><p>这个和带轮类似，背隙小，但是级数多了设计是一个大问题。</p>
+<h2 id="行星减速器"><a href="#行星减速器" class="headerlink" title="行星减速器"></a>行星减速器</h2><p>淘宝上有卖配套的42步进的行星减速(100左右)，但是级数多了，同样有背隙。一级的话减速比又只有5左右，也有精密的行星减速，不过价格嘛。。有一个比较好的选择就是一级行星+一级同步带轮减速,这样可以达到20+的减速比,间隙也还可以接受，减速器因为是现成的，设计上也不会有太大的难度。</p>
+<h2 id="少差齿行星减速"><a href="#少差齿行星减速" class="headerlink" title="少差齿行星减速"></a>少差齿行星减速</h2><p>所谓少差齿，就是一堆齿数之差很小的齿轮（1-4），通常都是输入轴转动一圈，齿轮之间可能才完成一个或者两个齿的啮合，因此减速比可以做得特别高，而且因为齿轮比较少，结构紧凑，背隙也比较好控制。具体可以看这里：</p>
+<p><a href="http://www.gearandrack.cn/gear_knowledge/gear_train/gear_train_03.html" target="_blank" rel="noopener">http://www.gearandrack.cn/gear_knowledge/gear_train/gear_train_03.html</a></p>
+<p>下面介绍的几种其实算是少差齿行星减速的变种了。</p>
+<h2 id="摆线针轮减速"><a href="#摆线针轮减速" class="headerlink" title="摆线针轮减速"></a>摆线针轮减速</h2><p>对这个不是很了解，查的一些资料也很少提到我最关心的背隙，可能得自己做个模型出来装一下才知道。</p>
+<h2 id="rv减速器"><a href="#rv减速器" class="headerlink" title="rv减速器"></a>rv减速器</h2><p>工业机器人最常用的减速器之一，除了贵以外，反正是各种优点。不过想自己做的话基本是不太可能了。</p>
+<h2 id="谐波减速器"><a href="#谐波减速器" class="headerlink" title="谐波减速器"></a>谐波减速器</h2><p>工业机器人中最常用的减速器之二，同样除了贵以外，各种优点（有一些方面比rv会稍差一些）。结构足够简单，三个零件就能达到很高的减速比。而且由于柔性轮的存在，间隙也比较好控制。</p>
+<p>#谐波减速器的设计</p>
+<p>谐波减速的原理并不复杂，波发生器带动柔轮上的齿与刚轮上的啮合，刚轮是固定的，通常情况下刚轮齿数只比比柔轮多1-4个齿（少齿差），这里假设齿差为2，（通常波数等于齿差，波数就是波发生器上突起部位的数目），则波发生器转半圈，柔轮上的齿和钢轮才完成一次完整的啮合，因此减速比就是柔轮齿数/波数。从这也可以看出柔轮只要有40齿，波数为2，那么就能有20的减速比了。</p>
+<p>我现在35步进上做了一个原型，毕竟35比较小，如果可以的话那42步进上的设计也就不是什么大问题了。因激光切割的精度和可靠性要比3d打印机高，加工也很方便，因此关键的零件都用激光切割机来完成，以下列出主要部件的参数：</p>
+<table>
+<thead>
+<tr>
+<th>部件</th>
+<th>材料</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>波发生器</td>
+<td>双f693轴承</td>
+</tr>
+<tr>
+<td>刚轮</td>
+<td>亚克力/pom</td>
+<td>0.8模34齿3mm厚</td>
+</tr>
+<tr>
+<td>柔轮</td>
+<td>pom</td>
+<td>0.8模32齿5mm厚</td>
+</tr>
+</tbody>
+</table>
+<p>pom的强度在高分子材料中算比较高的了，而且摩擦系数也比较小，又可以激光切割，所以拿它来做齿轮。一般激光切割机切个0.5模的齿应该没什么大问题，这里我先用0.8模做实验，根据齿数可以算出减速比为16。</p>
+<p>先简单测试一下感觉效果还不错，但是马上问题就来了：柔轮的转动没办法输出啊@_@。学校的激光切割机最多只能切5mm，这么小的厚度如果做个内花键输出的话，柔轮就没办法变形了啊。好在因为激光切割机切出来的齿比设计是要小（内齿轮是相反的），我从有间隙的齿轮上受到了一点启发。用一个齿数和柔轮相同的但是配合时又有间隙的内花键作为输出，在柔轮变被拉长的地方刚好可以抵消掉和花键配合的间隙，同时因为间隙的存在，柔轮可以在花键内自由变形，而齿数刚好又相同的话柔轮和花键就始终保持固定的相对位置。<br><img src="http://wx2.sinaimg.cn/mw690/e8d4eb99ly1fsfj50ahqhj217q0kuah2.jpg" alt=""></p>
+<p>最后做出来的谐波减速器还是可以用的，但是间隙还需要进一步控制。因为激光是有直径的，所以切除来的齿轮不是完好的，而且波发生器两个齿轮的孔位也有可能会有误差。，所以要不断尝试，做补偿，然后装起来看间隙，看转的是不是顺畅，还是有点麻烦的。下面是实物。<br><img src="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fsfi6726bbj21kw16owx0.jpg" alt=""><br><img src="http://wx1.sinaimg.cn/mw690/e8d4eb99gy1fsfi6b4oe0j21kw23ukjl.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag"># 项目</a>
+          
+            <a href="/tags/减速器/" rel="tag"># 减速器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/30/6轴机械臂的运动学实现/" rel="next" title="6轴机械臂的快速实现">
+                <i class="fa fa-chevron-left"></i> 6轴机械臂的快速实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="YANG" />
+            
+              <p class="site-author-name" itemprop="name">YANG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#减速器"><span class="nav-number">1.</span> <span class="nav-text">减速器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通齿轮减速"><span class="nav-number">1.1.</span> <span class="nav-text">普通齿轮减速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#螺旋-斜-人字齿轮减速"><span class="nav-number">1.2.</span> <span class="nav-text">螺旋/斜/人字齿轮减速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#涡轮蜗杆减速"><span class="nav-number">1.3.</span> <span class="nav-text">涡轮蜗杆减速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带轮-同步带轮减速"><span class="nav-number">1.4.</span> <span class="nav-text">带轮/同步带轮减速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绳驱动减速"><span class="nav-number">1.5.</span> <span class="nav-text">绳驱动减速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行星减速器"><span class="nav-number">1.6.</span> <span class="nav-text">行星减速器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#少差齿行星减速"><span class="nav-number">1.7.</span> <span class="nav-text">少差齿行星减速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#摆线针轮减速"><span class="nav-number">1.8.</span> <span class="nav-text">摆线针轮减速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rv减速器"><span class="nav-number">1.9.</span> <span class="nav-text">rv减速器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谐波减速器"><span class="nav-number">1.10.</span> <span class="nav-text">谐波减速器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YANG</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
