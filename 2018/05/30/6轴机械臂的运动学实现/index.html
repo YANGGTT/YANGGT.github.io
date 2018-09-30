@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="项目,机械臂," />
+  <meta name="keywords" content="运动学,机械臂," />
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="(未完) 上个学期做了一个六轴的机械臂，当时还只能做到四自由联动，由于种种原因，最近才终于把这个坑填上了。虽然还无法做到像RTCP这样高级的运动，但是已经可以做定姿态的插补了，勉强能算6轴联动了吧。  对于关节机器人的运动学求解一般分为两个部分，一是已知各个关节角求末端执行机构的位姿，这称为正运动学；另一个是给定执行机构的位姿求各个关节角。正运动学比较简单，而且只有唯一解，而逆运动学就比较复杂并且">
-<meta name="keywords" content="项目,机械臂">
+<meta name="keywords" content="运动学,机械臂">
 <meta property="og:type" content="article">
 <meta property="og:title" content="6轴机械臂的快速实现">
 <meta property="og:url" content="http://yoursite.com/2018/05/30/6轴机械臂的运动学实现/index.html">
 <meta property="og:site_name" content="YANG">
 <meta property="og:description" content="(未完) 上个学期做了一个六轴的机械臂，当时还只能做到四自由联动，由于种种原因，最近才终于把这个坑填上了。虽然还无法做到像RTCP这样高级的运动，但是已经可以做定姿态的插补了，勉强能算6轴联动了吧。  对于关节机器人的运动学求解一般分为两个部分，一是已知各个关节角求末端执行机构的位姿，这称为正运动学；另一个是给定执行机构的位姿求各个关节角。正运动学比较简单，而且只有唯一解，而逆运动学就比较复杂并且">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-01T10:57:38.000Z">
+<meta property="og:updated_time" content="2018-09-29T11:54:03.768Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="6轴机械臂的快速实现">
 <meta name="twitter:description" content="(未完) 上个学期做了一个六轴的机械臂，当时还只能做到四自由联动，由于种种原因，最近才终于把这个坑填上了。虽然还无法做到像RTCP这样高级的运动，但是已经可以做定姿态的插补了，勉强能算6轴联动了吧。  对于关节机器人的运动学求解一般分为两个部分，一是已知各个关节角求末端执行机构的位姿，这称为正运动学；另一个是给定执行机构的位姿求各个关节角。正运动学比较简单，而且只有唯一解，而逆运动学就比较复杂并且">
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/项目/" itemprop="url" rel="index">
-                    <span itemprop="name">项目</span>
+                  <a href="/categories/project/" itemprop="url" rel="index">
+                    <span itemprop="name">project</span>
                   </a>
                 </span>
 
@@ -353,9 +353,9 @@
         <h1 id="未完"><a href="#未完" class="headerlink" title="(未完)"></a>(未完)</h1><blockquote>
 <p>上个学期做了一个六轴的机械臂，当时还只能做到四自由联动，由于种种原因，最近才终于把这个坑填上了。虽然还无法做到像RTCP这样高级的运动，但是已经可以做定姿态的插补了，勉强能算6轴联动了吧。</p>
 </blockquote>
-<p><strong>对于关节机器人的运动学求解一般分为两个部分，一是已知各个关节角求末端执行机构的位姿，这称为正运动学；另一个是给定执行机构的位姿求各个关节角。正运动学比较简单，而且只有唯一解，而逆运动学就比较复杂并且存在多解。在求解之前要先建立关节机器人的D-H模型，当D-H参数确定后，正运动学也很容易就能得到了。而对于逆运动学的求解通常有两种，一种是数值解，另一种是闭式解。数值解是利用迭代去求得各个关节角，使得对应的位姿收敛于目标值，matlab中的ikine函数就是这样的一种方法；而闭式解则是直接确定位姿到关节角的映射关系，直接使用关系式求解。虽然闭式解的实时计算量比数值解更少，运用也更灵活，但是有些机械臂是不存在闭式解的，而且数值解更具有通用性，只要确立好D-H模型，剩下的事基本上就交给处理器了。arduino上实现的话最好还是闭式解。</strong></p>
+<p><strong>对于关节机器人的运动学求解一般分为两个部分，一是已知各个关节角求末端执行机构的位姿，这称为正运动学；另一个是给定执行机构的位姿求各个关节角。正运动学比较简单，而且只有唯一解，而逆运动学就比较复杂并且存在多解。在求解之前要先建立关节机器人的D-H模型，当D-H参数确定后，正运动学也很容易就能得到了。而对于逆运动学的求解通常有两种，一种是数值解，另一种是闭式解。数值解是利用迭代法去求得各个关节角，使得对应的位姿收敛于目标值，matlab中的ikine函数就是这样的一种方法；而闭式解则是直接确定位姿到关节角的映射关系，直接使用关系式求解。虽然闭式解的实时计算量比数值解更少，运用也更灵活，但是有些机械臂是不存在闭式解的，而且数值解更具有通用性，只要确立好D-H模型，剩下的事基本上就交给处理器了。arduino上实现的话最好还是闭式解。</strong></p>
 <p><strong>这里我做的机械臂是一种带有球形手腕的机械臂，也是工业上最常见的6轴结构，由于球形手腕的特殊性，机械臂的运动学是可解耦的，并且可以求闭式解。</strong></p>
-<h1 id="运动学基础"><a href="#运动学基础" class="headerlink" title="运动学基础"></a>运动学基础</h1><p>三自由度比如uarm这样的机械臂的求解可以完全用几何方法实现，但是如果又多了三个自由度，就涉及到姿态的求解，姿态相对于坐标来说会比较抽象一些，所以还是得用一些运动学方法。（前面说不需要很多机器人学的知识，意思是还是需要一些的啦）</p>
+<h1 id="运动学基础"><a href="#运动学基础" class="headerlink" title="运动学基础"></a>运动学基础</h1><p>三自由度比如uarm这样的机械臂的求解可以完全用几何方法实现，但是如果又多了三个自由度，就涉及到姿态的求解，姿态相对于坐标来说会比较抽象一些，所以还是得用一些运动学方法。</p>
 <h2 id="坐标描述和平移变换"><a href="#坐标描述和平移变换" class="headerlink" title="坐标描述和平移变换"></a>坐标描述和平移变换</h2><p>坐标的描述其实不需要过多的解释了，就是我们平时理解的（x,y,z）。但需要补充的是，在机器人学中（x,y,z）并不是表示一个点，而是一个过原点的向量。</p>
 <p>假设我们有一个绝对坐标系（基坐标系）{A}，可以用$^Ap_B=(x,y,z)$来表示姿态和{A}系相同的坐标系{B}的位置$^Ap_B$表示{B}系的原点在{A}系中的位置，也称做平移变换。利用这个平移变换可以建立起两个坐标系之间的映射。<br>对于空间上的任意一点p，已知在{A}系中的坐标$^Ap$，{B}系中的坐标$^Bp$,并且{A}系和{B}系的各坐标轴平行，{B}系相对于{A}系的位置$^Ap_B$，则有如下映射关系：<br>$$<br>^Ap=^Bp+^Ap_B<br>$$</p>
 <h2 id="姿态描述和旋转变换"><a href="#姿态描述和旋转变换" class="headerlink" title="姿态描述和旋转变换"></a>姿态描述和旋转变换</h2><p>对于空间中一个刚体的姿态，通常使用一个旋转矩阵（变换）来描述。假设一直角坐标系{B}和刚体固连，则可以用</p>
@@ -505,7 +505,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/项目/" rel="tag"># 项目</a>
+            <a href="/tags/运动学/" rel="tag"># 运动学</a>
           
             <a href="/tags/机械臂/" rel="tag"># 机械臂</a>
           
@@ -520,8 +520,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/06/步进电机加减速的设计/" rel="next" title="步进电机加减速的设计">
-                <i class="fa fa-chevron-left"></i> 步进电机加减速的设计
+              <a href="/2018/04/30/数控插补算法/" rel="next" title="数控系统的简单实现">
+                <i class="fa fa-chevron-left"></i> 数控系统的简单实现
               </a>
             
           </div>
@@ -611,7 +611,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -622,7 +622,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -633,7 +633,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

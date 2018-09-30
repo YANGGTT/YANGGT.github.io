@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="项目,全方位移动机器人," />
+  <meta name="keywords" content="轮系机器人," />
 
 
 
@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="全向轮特点：与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面的影响。在调试的时候还发现了一个比较致命的地方：一般的全向轮是像渲染图中那样双层的，这就会导致轮子在转动过程中和地面的接触点相对于机器人坐标是变化的，就是图中每个轮到底盘中心的位置是有两个值的，一个外层接触时的">
-<meta name="keywords" content="项目,全方位移动机器人">
+<meta name="description" content="本文关于全方位移动地盘的运动学分析的部分内容与其它文章存在差异，因为后面我尝试求解了地盘的位姿反解，从而可以实现里程计、轨迹跟踪以及类似于插补的运动，而通常轮系机器人的位姿控制是根据速度运动学和里程计的。  全向轮特点  与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面">
+<meta name="keywords" content="轮系机器人">
 <meta property="og:type" content="article">
 <meta property="og:title" content="三轮全向轮底盘">
 <meta property="og:url" content="http://yoursite.com/2018/04/05/全向轮底盘/index.html">
 <meta property="og:site_name" content="YANG">
-<meta property="og:description" content="全向轮特点：与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面的影响。在调试的时候还发现了一个比较致命的地方：一般的全向轮是像渲染图中那样双层的，这就会导致轮子在转动过程中和地面的接触点相对于机器人坐标是变化的，就是图中每个轮到底盘中心的位置是有两个值的，一个外层接触时的">
+<meta property="og:description" content="本文关于全方位移动地盘的运动学分析的部分内容与其它文章存在差异，因为后面我尝试求解了地盘的位姿反解，从而可以实现里程计、轨迹跟踪以及类似于插补的运动，而通常轮系机器人的位姿控制是根据速度运动学和里程计的。  全向轮特点  与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9upm4vrij213c0u00un.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/e8d4eb99gy1fq9utiw7rxj20z70owdj1.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99ly1fqcly1oo2oj21ko12341b.jpg">
-<meta property="og:updated_time" content="2018-04-15T02:13:02.288Z">
+<meta property="og:updated_time" content="2018-09-29T12:29:08.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="三轮全向轮底盘">
-<meta name="twitter:description" content="全向轮特点：与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面的影响。在调试的时候还发现了一个比较致命的地方：一般的全向轮是像渲染图中那样双层的，这就会导致轮子在转动过程中和地面的接触点相对于机器人坐标是变化的，就是图中每个轮到底盘中心的位置是有两个值的，一个外层接触时的">
+<meta name="twitter:description" content="本文关于全方位移动地盘的运动学分析的部分内容与其它文章存在差异，因为后面我尝试求解了地盘的位姿反解，从而可以实现里程计、轨迹跟踪以及类似于插补的运动，而通常轮系机器人的位姿控制是根据速度运动学和里程计的。  全向轮特点  与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面">
 <meta name="twitter:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9upm4vrij213c0u00un.jpg">
 
 
@@ -319,8 +319,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/项目/" itemprop="url" rel="index">
-                    <span itemprop="name">项目</span>
+                  <a href="/categories/project/" itemprop="url" rel="index">
+                    <span itemprop="name">project</span>
                   </a>
                 </span>
 
@@ -356,8 +356,9 @@
       
         <p><img src="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9upm4vrij213c0u00un.jpg" alt=""></p>
 <blockquote>
-<p><strong>全向轮特点</strong>：与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面的影响。在调试的时候还发现了一个比较致命的地方：一般的全向轮是像渲染图中那样双层的，这就会导致轮子在转动过程中和地面的接触点相对于机器人坐标是变化的，就是图中每个轮到底盘中心的位置是有两个值的，一个外层接触时的R，和内层接触时的r。当然在地盘足够大，或者对精度要求不那么高的情况下还是可以接受的。</p>
+<p>本文关于全方位移动地盘的运动学分析的部分内容与其它文章存在差异，因为后面我尝试求解了地盘的位姿反解，从而可以实现里程计、轨迹跟踪以及类似于插补的运动，而通常轮系机器人的位姿控制是根据速度运动学和里程计的。</p>
 </blockquote>
+<h1 id="全向轮特点"><a href="#全向轮特点" class="headerlink" title="全向轮特点"></a>全向轮特点</h1><p>  与普通轮最大的不同是一个安装好的全向轮除了可以受控转动，还可以沿轴向自由移动。全向轮除了可以实现全方位移动外，几乎就没有什么其他优点了。机动性能差，对地面的要求高，容易受地面的影响。在调试的时候还发现了一个比较致命的地方：一般的全向轮是像渲染图中那样双层的，这就会导致轮子在转动过程中和地面的接触点相对于机器人坐标是变化的，就是图中每个轮到底盘中心的位置是有两个值的，一个外层接触时的R，和内层接触时的r。当然在地盘足够大，或者对精度要求不那么高的情况下还是可以接受的。</p>
 <h1 id="速度反解"><a href="#速度反解" class="headerlink" title="速度反解"></a>速度反解</h1><p><strong>思路：先考虑机器人在机器人坐标x’oy’下的速度和各轮子线速度的关系，再由绝对坐标和机器人坐标的旋转变换关系得到机器人绝对速度和各电机转速的关系。</strong><br><img src="http://wx3.sinaimg.cn/mw690/e8d4eb99gy1fq9utiw7rxj20z70owdj1.jpg" alt=""><br>如图：三个车轮A、B、C与底盘中心的连线各成120度分布，且转轴与连线共线。<br>规定：各车轮线速度图示方向为正，机器人的角速度逆时针为正，当电机不转动时是刚性的。</p>
 <p>首先，在机器人坐标下，分别考虑3个电机对机器人速度的影响，再进行叠加。以B轮为例：当只有B转动时，A、C轮只能沿轴向移动，可以做出速度顺心I(对于有些轮系机器人可速度顺心可能不是很容易就能找到，所以比较通用的做法是使用刚体的平面运动)。则VB对机器人的速度贡献为：VBx’=-(2/3)<em>VB</em>cos60°，VBy’=-(2/3)<em>VB</em>sin60°，Wo’=VB/3R。同理计算A、C的分量，叠加后有：</p>
 <p>$$<br>\begin{bmatrix}<br>V_{x}’\\<br>V_{y}’  \\<br>\omega’<br>\end{bmatrix}=\begin{bmatrix}<br> 2/3&amp; -1/3 &amp;-1/3 \\<br> 0&amp; 1/\sqrt{3} &amp;-1/\sqrt{3} \\<br> 1/3R&amp;1/3R  &amp;1/3R<br>\end{bmatrix}\begin{bmatrix}<br>V_{A}\\<br>V_{B}\\<br>V_{C}<br>\end{bmatrix}<br>$$  </p>
@@ -394,9 +395,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/项目/" rel="tag"># 项目</a>
-          
-            <a href="/tags/全方位移动机器人/" rel="tag"># 全方位移动机器人</a>
+            <a href="/tags/轮系机器人/" rel="tag"># 轮系机器人</a>
           
         </div>
       
@@ -419,8 +418,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/06/使用欧拉方程解SCARA/" rel="prev" title="使用欧拉方程解SCARA">
-                使用欧拉方程解SCARA <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/06/步进电机加减速的设计/" rel="prev" title="步进电机加减速的设计">
+                步进电机加减速的设计 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -500,7 +499,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -511,7 +510,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -522,7 +521,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -555,7 +554,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#速度反解"><span class="nav-number">1.</span> <span class="nav-text">速度反解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#位姿反解"><span class="nav-number">2.</span> <span class="nav-text">位姿反解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高级运动"><span class="nav-number">3.</span> <span class="nav-text">高级运动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坐标反解的运动轨迹"><span class="nav-number">3.1.</span> <span class="nav-text">坐标反解的运动轨迹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#点跟随"><span class="nav-number">3.2.</span> <span class="nav-text">点跟随</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">3.3.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#全向轮特点"><span class="nav-number">1.</span> <span class="nav-text">全向轮特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#速度反解"><span class="nav-number">2.</span> <span class="nav-text">速度反解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#位姿反解"><span class="nav-number">3.</span> <span class="nav-text">位姿反解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高级运动"><span class="nav-number">4.</span> <span class="nav-text">高级运动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坐标反解的运动轨迹"><span class="nav-number">4.1.</span> <span class="nav-text">坐标反解的运动轨迹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#点跟随"><span class="nav-number">4.2.</span> <span class="nav-text">点跟随</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">4.3.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
             
 
           </div>

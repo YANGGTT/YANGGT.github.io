@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="项目,机械臂," />
+  <meta name="keywords" content="机械臂," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在marlin固件中使用的leib算法，一种利用泰勒级数来拟合曲线，以减小计算量的梯形加减速方法。这里我仅用加法递归来实现加减速，虽然不能得到很完美的加减速曲线，但是在保证高速下不丢步和不过冲的情况下，可以大大减少计算量。  相关参数步进电机总的角位移：$\omega_{a}$若以步进电机驱动直线运动：    总位移：$s_{a}=\omega r$    行进的总步数：$M_{s}$    当">
-<meta name="keywords" content="项目,机械臂">
+<meta name="description" content="在marlin固件中使用的leib算法来实现步进电机的加减速（一种利用泰勒级数来拟合曲线，以减小计算量的梯形加减速方法）。后来我发现可以只加法递归来实现加减速，虽然不能得到很完美的加减速曲线，但是在保证高速下不丢步和不过冲的情况下，可以大大减少计算量。不过这种方法非常局限，这里只是为设计加减速提供一些思路。  相关参数步进电机总的角位移：$\omega_{a}$若以步进电机驱动直线运动：">
+<meta name="keywords" content="机械臂">
 <meta property="og:type" content="article">
 <meta property="og:title" content="步进电机加减速的设计">
 <meta property="og:url" content="http://yoursite.com/2018/04/06/步进电机加减速的设计/index.html">
 <meta property="og:site_name" content="YANG">
-<meta property="og:description" content="在marlin固件中使用的leib算法，一种利用泰勒级数来拟合曲线，以减小计算量的梯形加减速方法。这里我仅用加法递归来实现加减速，虽然不能得到很完美的加减速曲线，但是在保证高速下不丢步和不过冲的情况下，可以大大减少计算量。  相关参数步进电机总的角位移：$\omega_{a}$若以步进电机驱动直线运动：    总位移：$s_{a}=\omega r$    行进的总步数：$M_{s}$    当">
+<meta property="og:description" content="在marlin固件中使用的leib算法来实现步进电机的加减速（一种利用泰勒级数来拟合曲线，以减小计算量的梯形加减速方法）。后来我发现可以只加法递归来实现加减速，虽然不能得到很完美的加减速曲线，但是在保证高速下不丢步和不过冲的情况下，可以大大减少计算量。不过这种方法非常局限，这里只是为设计加减速提供一些思路。  相关参数步进电机总的角位移：$\omega_{a}$若以步进电机驱动直线运动：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-15T08:26:29.889Z">
+<meta property="og:updated_time" content="2018-09-29T11:51:45.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="步进电机加减速的设计">
-<meta name="twitter:description" content="在marlin固件中使用的leib算法，一种利用泰勒级数来拟合曲线，以减小计算量的梯形加减速方法。这里我仅用加法递归来实现加减速，虽然不能得到很完美的加减速曲线，但是在保证高速下不丢步和不过冲的情况下，可以大大减少计算量。  相关参数步进电机总的角位移：$\omega_{a}$若以步进电机驱动直线运动：    总位移：$s_{a}=\omega r$    行进的总步数：$M_{s}$    当">
+<meta name="twitter:description" content="在marlin固件中使用的leib算法来实现步进电机的加减速（一种利用泰勒级数来拟合曲线，以减小计算量的梯形加减速方法）。后来我发现可以只加法递归来实现加减速，虽然不能得到很完美的加减速曲线，但是在保证高速下不丢步和不过冲的情况下，可以大大减少计算量。不过这种方法非常局限，这里只是为设计加减速提供一些思路。  相关参数步进电机总的角位移：$\omega_{a}$若以步进电机驱动直线运动：">
 
 
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/项目/" itemprop="url" rel="index">
-                    <span itemprop="name">项目</span>
+                  <a href="/categories/idea/" itemprop="url" rel="index">
+                    <span itemprop="name">idea</span>
                   </a>
                 </span>
 
@@ -351,7 +351,7 @@
 
       
         <blockquote>
-<p>在marlin固件中使用的leib算法，一种利用泰勒级数来拟合曲线，以减小计算量的梯形加减速方法。这里我仅用加法递归来实现加减速，虽然不能得到很完美的加减速曲线，但是在保证高速下不丢步和不过冲的情况下，可以大大减少计算量。</p>
+<p>在marlin固件中使用的leib算法来实现步进电机的加减速（一种利用泰勒级数来拟合曲线，以减小计算量的梯形加减速方法）。后来我发现可以只加法递归来实现加减速，虽然不能得到很完美的加减速曲线，但是在保证高速下不丢步和不过冲的情况下，可以大大减少计算量。不过这种方法非常局限，这里只是为设计加减速提供一些思路。</p>
 </blockquote>
 <h1 id="相关参数"><a href="#相关参数" class="headerlink" title="相关参数"></a>相关参数</h1><p>步进电机总的角位移：$\omega_{a}$<br>若以步进电机驱动直线运动：<br>    总位移：$s_{a}=\omega r$<br>    行进的总步数：$M_{s}$<br>    当前行进的步数：$i$<br>    步长： $p_{s}=M_{s}/s_{a}$———-[1]<br>步长为步进电机每一步行进的位移，可以得到当前行进的位移： 因此可以把当前步数理解为以一个步长为单位的位移。<br>    当前速度：$v_{i}$<br>    当前时刻：$t_{i}$<br>    当前脉冲间隔：$\Delta t_{i}$<br>    有：    $t_{i}=\Delta t_{1}+\Delta t_{2}+…+\Delta t_{i}$———-[2]</p>
 <h1 id="Delta-t-i-的确定过程："><a href="#Delta-t-i-的确定过程：" class="headerlink" title="$\Delta t_{i}$的确定过程："></a>$\Delta t_{i}$的确定过程：</h1><p>设计步进电机的加减速实际就是给定速度-时间曲线（曲线的类型需要根据实际运行速度和需求确定），设计每两个脉冲之间的时间间隔$\Delta t_{i}$，可以使用i的关系式，也可以使用递推式确定。<br>各参数关系关系如下：<br>$$<br>v_{i}-t_{i}\Leftrightarrow s_{i}-t_{i}\Leftrightarrow i-t_{i}\Leftrightarrow i-\Delta t_{i}\Leftrightarrow \Delta t_{i}-\Delta t_{i-1}<br>$$</p>
@@ -375,8 +375,6 @@
       
         <div class="post-tags">
           
-            <a href="/tags/项目/" rel="tag"># 项目</a>
-          
             <a href="/tags/机械臂/" rel="tag"># 机械臂</a>
           
         </div>
@@ -390,8 +388,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/06/使用欧拉方程解SCARA/" rel="next" title="使用欧拉方程解SCARA">
-                <i class="fa fa-chevron-left"></i> 使用欧拉方程解SCARA
+              <a href="/2018/04/05/全向轮底盘/" rel="next" title="三轮全向轮底盘">
+                <i class="fa fa-chevron-left"></i> 三轮全向轮底盘
               </a>
             
           </div>
@@ -400,8 +398,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/30/6轴机械臂的运动学实现/" rel="prev" title="6轴机械臂的快速实现">
-                6轴机械臂的快速实现 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/06/使用欧拉方程解SCARA/" rel="prev" title="使用欧拉方程解SCARA">
+                使用欧拉方程解SCARA <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -481,7 +479,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -492,7 +490,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -503,7 +501,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
