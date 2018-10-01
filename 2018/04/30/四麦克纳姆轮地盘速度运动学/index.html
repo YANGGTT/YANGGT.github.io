@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="如图，四个麦轮小滚子的轴呈’X’布置,机器人坐标系及各参数如图所示，往$Y_R$方向行进的电机转向为正，电机编号和所在象限相同。  各电机的角速度为$\omega_1、\omega_2、\omega_3、\omega_4$ 车轮半径r，轮心距底盘中心的距离为$l$，a、b如图所示 小滚子的周向速度为$v_1、v_2、v_3、v_4$满足$v_1=\omega_1r、v_2=\omega_2r、v_">
+<meta name="description" content="如图，四个麦轮小滚子的轴呈’X’布置,机器人坐标系及各参数如图所示，往$Y_R$方向行进的电机转向为正，电机编号和所在象限相同。  各电机的角速度为$\omega_1、\omega_2、\omega_3、\omega_4$ 车轮半径r，轮心距底盘中心的距离为$l$，a、b如图所示 小滚子的周向速度为$v_1、v_2、v_3、v_4$满足$v_1=\sqrt2/2\omega_1r、v_2=\sqr">
 <meta name="keywords" content="轮系,运动学">
 <meta property="og:type" content="article">
 <meta property="og:title" content="四麦克纳姆轮地盘的速度运动学">
 <meta property="og:url" content="http://yoursite.com/2018/04/30/四麦克纳姆轮地盘速度运动学/index.html">
 <meta property="og:site_name" content="YANG">
-<meta property="og:description" content="如图，四个麦轮小滚子的轴呈’X’布置,机器人坐标系及各参数如图所示，往$Y_R$方向行进的电机转向为正，电机编号和所在象限相同。  各电机的角速度为$\omega_1、\omega_2、\omega_3、\omega_4$ 车轮半径r，轮心距底盘中心的距离为$l$，a、b如图所示 小滚子的周向速度为$v_1、v_2、v_3、v_4$满足$v_1=\omega_1r、v_2=\omega_2r、v_">
+<meta property="og:description" content="如图，四个麦轮小滚子的轴呈’X’布置,机器人坐标系及各参数如图所示，往$Y_R$方向行进的电机转向为正，电机编号和所在象限相同。  各电机的角速度为$\omega_1、\omega_2、\omega_3、\omega_4$ 车轮半径r，轮心距底盘中心的距离为$l$，a、b如图所示 小滚子的周向速度为$v_1、v_2、v_3、v_4$满足$v_1=\sqrt2/2\omega_1r、v_2=\sqr">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/e8d4eb99gy1fvrilrjvtbj209j09fq3m.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/e8d4eb99gy1fvrilsa9opj21cq1buad4.jpg">
-<meta property="og:updated_time" content="2018-09-30T05:50:28.211Z">
+<meta property="og:updated_time" content="2018-10-01T06:09:47.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="四麦克纳姆轮地盘的速度运动学">
-<meta name="twitter:description" content="如图，四个麦轮小滚子的轴呈’X’布置,机器人坐标系及各参数如图所示，往$Y_R$方向行进的电机转向为正，电机编号和所在象限相同。  各电机的角速度为$\omega_1、\omega_2、\omega_3、\omega_4$ 车轮半径r，轮心距底盘中心的距离为$l$，a、b如图所示 小滚子的周向速度为$v_1、v_2、v_3、v_4$满足$v_1=\omega_1r、v_2=\omega_2r、v_">
+<meta name="twitter:description" content="如图，四个麦轮小滚子的轴呈’X’布置,机器人坐标系及各参数如图所示，往$Y_R$方向行进的电机转向为正，电机编号和所在象限相同。  各电机的角速度为$\omega_1、\omega_2、\omega_3、\omega_4$ 车轮半径r，轮心距底盘中心的距离为$l$，a、b如图所示 小滚子的周向速度为$v_1、v_2、v_3、v_4$满足$v_1=\sqrt2/2\omega_1r、v_2=\sqr">
 <meta name="twitter:image" content="http://wx3.sinaimg.cn/mw690/e8d4eb99gy1fvrilrjvtbj209j09fq3m.jpg">
 
 
@@ -357,10 +357,10 @@
 <ul>
 <li>各电机的角速度为$\omega_1、\omega_2、\omega_3、\omega_4$</li>
 <li>车轮半径r，轮心距底盘中心的距离为$l$，a、b如图所示</li>
-<li>小滚子的周向速度为$v_1、v_2、v_3、v_4$<br>满足$v_1=\omega_1r、v_2=\omega_2r、v_3=\omega_3r、v_4=\omega_4r$</li>
+<li>小滚子的周向速度为$v_1、v_2、v_3、v_4$<br>满足$v_1=\sqrt2/2\omega_1r、v_2=\sqrt2/2\omega_2r、v_3=\sqrt2/2\omega_3r、v_4=\sqrt2/2\omega_4r$</li>
 <li>在地盘坐标系中各自由度的速度：$v^R_x、v^R_y、\omega^R$</li>
 </ul>
-<p>假设地盘在运动过程中保持理想的约束条件（不打滑）利用平面运动的基点法：<br>$$<br>v_1=-\sqrt2/2v^R_x+\sqrt2/2v^R_y+\omega^Rlcos(\alpha-\pi/4)\\<br>v_2=\sqrt2/2v^R_x+\sqrt2/2v^R_y-\omega^Rlcos(\alpha-\pi/4)\\<br>v_3=-\sqrt2/2v^R_x+\sqrt2/2v^R_y-\omega^Rlcos(\alpha-\pi/4)\\<br>v_4=\sqrt2/2v^R_x+\sqrt2/2v^R_y+\omega^Rlcos(\alpha-\pi/4)\\<br>$$<br>进而：<br>$$<br>\omega_1r=-v^R_x+v^R_y+\omega^R(a+b)\\<br>\omega_2r=v^R_x+v^R_y-\omega^R(a+b)\\<br>\omega_3r=-v^R_x+v^R_y-\omega^R(a+b)\\<br>\omega_4r=v^R_x+v^R_y+\omega^R(a+b)\\<br>$$<br>写成矩阵形式：<br>$$<br>\begin{bmatrix}<br>\omega^R_1\\<br>\omega^R_2\\<br>\omega^R_3\\<br>\omega^R_4<br>\end{bmatrix}=\begin{bmatrix}<br> -1&amp;  1&amp; a+b\\<br> 1&amp;  1&amp; -(a+b)\\<br> 1&amp;  1&amp; -(a+b)\\<br> -1&amp;  1&amp; a+b<br>\end{bmatrix}\begin{bmatrix}<br>v^R_x\\<br>v^R_y\\<br>\omega^R<br>\end{bmatrix}<br>$$</p>
+<p>假设地盘在运动过程中保持理想的约束条件（不打滑）利用平面运动的基点法：<br>$$<br>v_1=-\sqrt2/2v^R_x+\sqrt2/2v^R_y+\omega^Rlcos(\alpha-\pi/4)\\<br>v_2=\sqrt2/2v^R_x+\sqrt2/2v^R_y-\omega^Rlcos(\alpha-\pi/4)\\<br>v_3=-\sqrt2/2v^R_x+\sqrt2/2v^R_y-\omega^Rlcos(\alpha-\pi/4)\\<br>v_4=\sqrt2/2v^R_x+\sqrt2/2v^R_y+\omega^Rlcos(\alpha-\pi/4)\\<br>$$<br>进而：<br>$$<br>\omega_1r=-v^R_x+v^R_y+\omega^R(a+b)\\<br>\omega_2r=v^R_x+v^R_y-\omega^R(a+b)\\<br>\omega_3r=-v^R_x+v^R_y-\omega^R(a+b)\\<br>\omega_4r=v^R_x+v^R_y+\omega^R(a+b)\\<br>$$<br>写成矩阵形式：<br>$$<br>\begin{bmatrix}<br>\omega_1r\\<br>\omega_2r\\<br>\omega_3r\\<br>\omega_4r<br>\end{bmatrix}=\begin{bmatrix}<br> -1&amp;  1&amp; a+b\\<br> 1&amp;  1&amp; -(a+b)\\<br> 1&amp;  1&amp; -(a+b)\\<br> -1&amp;  1&amp; a+b<br>\end{bmatrix}\begin{bmatrix}<br>v^R_x\\<br>v^R_y\\<br>\omega^R<br>\end{bmatrix}<br>$$</p>
 <p>用旋转变换将位姿映射到绝对坐标系下<br>$$<br>\begin{bmatrix}<br>v^R_x\\<br>v^R_y\\<br>\omega^R<br>\end{bmatrix}=\begin{bmatrix}<br> cos\theta&amp;  sin\theta&amp; 0\\<br> -sin\theta&amp;  cos\theta&amp; 0)\\<br> 0&amp;  0&amp; 1<br>\end{bmatrix}\begin{bmatrix}<br>v_x\\<br>v_y\\<br>\omega<br>\end{bmatrix}<br>$$</p>
 <p>得到：</p>
 <p>$$<br>\omega_1r=-v_x(cos\theta+sin\theta)+v_y(cos\theta-sin\theta)+\omega(a+b)\\<br>\omega_2r=v_x(cos\theta-sin\theta)+v_y(cos\theta+sin\theta)-\omega(a+b)\\<br>\omega_3r=-v_x(cos\theta+sin\theta)+v_y(cos\theta-sin\theta)-\omega(a+b)\\<br>\omega_4r=-v_x(cos\theta-sin\theta)+v_y(cos\theta+sin\theta)+\omega(a+b)<br>$$</p>
