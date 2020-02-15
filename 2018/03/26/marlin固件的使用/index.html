@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/robot.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="3D打印机,marlin固件," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="marlin基本配置marlin中的基本配置在configuration.h文件下，以下只列出常用功能的配置，并不是完整的头文件   1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071">
+<meta name="keywords" content="3D打印机,marlin固件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="marlin固件的使用">
+<meta property="og:url" content="http://yoursite.com/2018/03/26/marlin固件的使用/index.html">
+<meta property="og:site_name" content="YANG">
+<meta property="og:description" content="marlin基本配置marlin中的基本配置在configuration.h文件下，以下只列出常用功能的配置，并不是完整的头文件   1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9tptizfvj20m80fw11z.jpg">
+<meta property="og:updated_time" content="2020-02-15T11:33:21.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="marlin固件的使用">
+<meta name="twitter:description" content="marlin基本配置marlin中的基本配置在configuration.h文件下，以下只列出常用功能的配置，并不是完整的头文件   1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9tptizfvj20m80fw11z.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/26/marlin固件的使用/"/>
+
+
+
+
+
+  <title>marlin固件的使用 | YANG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YANG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/marlin固件的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YANG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YANG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">marlin固件的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T00:00:00+08:00">
+                2018-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="marlin基本配置"><a href="#marlin基本配置" class="headerlink" title="marlin基本配置"></a>marlin基本配置</h1><p>marlin中的基本配置在configuration.h文件下，以下只列出常用功能的配置，并不是完整的头文件  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//波特率 :[2400,9600,19200,38400,57600,115200,250000]</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BAUDRATE 115200</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//蓝牙。启用拓展板上的串口</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BLUETOOTH</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//板类型，可在boards.h中找到</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MOTHERBOARD BOARD_RAMPS_14_EFB</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//机器名字</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CUSTOM_MACHINE_NAME <span class="meta-string">"3D Printer"</span></span></span><br><span class="line"><span class="comment">//机器ID</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MACHINE_UUID <span class="meta-string">"00000000-0000-0000-0000-000000000000"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//挤出机数量</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EXTRUDERS 1 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//两个挤出机时的偏移(mm)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EXTRUDER_OFFSET_X &#123;0.0, 20.00&#125; </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EXTRUDER_OFFSET_Y &#123;0.0, 5.00&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//电源类型:&#123;1:'ATX',2:'X-Box 360'&#125;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> POWER_SUPPLY 1 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//热传感器类型，根据头文件中的注释选择（通常为1）</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TEMP_SENSOR_0 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TEMP_SENSOR_1 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TEMP_SENSOR_2 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TEMP_SENSOR_3 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TEMP_SENSOR_BED 0 <span class="comment">//热床</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//最低允许温度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEATER_0_MINTEMP 5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEATER_1_MINTEMP 5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEATER_2_MINTEMP 5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEATER_3_MINTEMP 5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BED_MINTEMP 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//最高允许温度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEATER_0_MAXTEMP 275</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEATER_1_MAXTEMP 275</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEATER_2_MAXTEMP 275</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEATER_3_MAXTEMP 275</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BED_MAXTEMP 150</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用用M105显示功率</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EXTRUDER_WATTS (12.0*12.0/6.7) <span class="comment">// P=U^2/R</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BED_WATTS (12.0*12.0/1.1)      <span class="comment">// P=U^2/R</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 挤出机的pid（有几组默认的可选）</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  DEFAULT_Kp 22.2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  DEFAULT_Ki 1.08</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  DEFAULT_Kd 114</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//热床pid</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  DEFAULT_bedKp 10.00</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  DEFAULT_bedKi 1.023</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  DEFAULT_bedKd 305.4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//过热保护</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> THERMAL_PROTECTION_HOTENDS </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> THERMAL_PROTECTION_BED </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//机器类型</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> COREXY</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> COREXZ</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//最远位置限位或者最近限位</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> USE_XMIN_PLUG</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> USE_YMIN_PLUG</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> USE_ZMIN_PLUG</span></span><br><span class="line"><span class="comment">//#define USE_XMAX_PLUG</span></span><br><span class="line"><span class="comment">//#define USE_YMAX_PLUG</span></span><br><span class="line"><span class="comment">//#define USE_ZMAX_PLUG</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//限位开关上拉</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ENDSTOPPULLUPS</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 限位开关的常闭常开</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">bool</span> X_MIN_ENDSTOP_INVERTING = <span class="literal">true</span>; </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">bool</span> Y_MIN_ENDSTOP_INVERTING = <span class="literal">true</span>; </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">bool</span> Z_MIN_ENDSTOP_INVERTING = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">bool</span> X_MAX_ENDSTOP_INVERTING = <span class="literal">true</span>; </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">bool</span> Y_MAX_ENDSTOP_INVERTING = <span class="literal">true</span>; </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">bool</span> Z_MAX_ENDSTOP_INVERTING = <span class="literal">true</span>; </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">bool</span> Z_MIN_PROBE_ENDSTOP_INVERTING = <span class="literal">true</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">//低电平/高电平步进电机使能</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> X_ENABLE_ON 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Y_ENABLE_ON 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_ENABLE_ON 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> E_ENABLE_ON 0 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//电机不运动时立刻解锁电机</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DISABLE_X false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DISABLE_Y false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DISABLE_Z false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DISABLE_E false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DISABLE_INACTIVE_EXTRUDER true </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//电机反向</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INVERT_X_DIR false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INVERT_Y_DIR true</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INVERT_Z_DIR false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INVERT_E0_DIR false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INVERT_E1_DIR false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INVERT_E2_DIR false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INVERT_E3_DIR false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//回零后是原点或者最远点</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> X_HOME_DIR -1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Y_HOME_DIR -1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_HOME_DIR -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//软件限位</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> min_software_endstops true </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> max_software_endstops true </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//行程</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> X_MIN_POS 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Y_MIN_POS 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_MIN_POS 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> X_MAX_POS 280</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Y_MAX_POS 280</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_MAX_POS 250</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用G29进行自动调平</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AUTO_BED_LEVELING_FEATURE</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//两种模式，四点（矩形）调平和三点调平（取消注释使用三点调平）</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AUTO_BED_LEVELING_GRID</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//四点调平，矩形四边所在的坐标</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEFT_PROBE_BED_POSITION 15</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RIGHT_PROBE_BED_POSITION 170</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FRONT_PROBE_BED_POSITION 20</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BACK_PROBE_BED_POSITION 170</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">//三点调平的三个点坐标</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ABL_PROBE_PT_1_X 15</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ABL_PROBE_PT_1_Y 180</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ABL_PROBE_PT_2_X 15</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ABL_PROBE_PT_2_Y 20</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ABL_PROBE_PT_3_X 170</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ABL_PROBE_PT_3_Y 20</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//限位与喷嘴的偏置（限位相对于喷嘴的坐标）</span></span><br><span class="line"><span class="comment">//XY轴需要手动测量，可以M851修改触发限位时的Z轴坐标</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> X_PROBE_OFFSET_FROM_EXTRUDER 10  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Y_PROBE_OFFSET_FROM_EXTRUDER 10 </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_PROBE_OFFSET_FROM_EXTRUDER 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//调平时的移动速度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> XY_TRAVEL_SPEED 8000    </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Z在第一个点、中间点和最后一个点抬起的高度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_RAISE_BEFORE_PROBING 15  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_RAISE_BETWEEN_PROBINGS 5  </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_RAISE_AFTER_PROBING 15 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 热床中心为原点</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BED_CENTER_AT_0_0  </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//触发限位时各轴坐标，可以使用m206修改</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MANUAL_X_HOME_POS 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MANUAL_Y_HOME_POS 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MANUAL_Z_HOME_POS 0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Z轴的回零保护，先运动到一点再回Z0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_SAFE_HOMING</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//回零的速度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HOMING_FEEDRATE &#123;50*60, 50*60, 4*60, 0&#125;  </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1mm对应的脉冲数</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEFAULT_AXIS_STEPS_PER_UNIT   &#123;80,80,80,160&#125; </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//最大速度(mm/sec)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEFAULT_MAX_FEEDRATE          &#123;300, 300, 20, 25&#125;    </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//最大加速度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEFAULT_MAX_ACCELERATION      &#123;3000,3000,100,10000&#125;   </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//默认加速度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEFAULT_ACCELERATION          3000    </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEFAULT_RETRACT_ACCELERATION  3000    </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEFAULT_TRAVEL_ACCELERATION   3000    </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//启用EEPROM</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EEPROM_SETTINGS</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 预热温度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PLA_PREHEAT_HOTEND_TEMP 190</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PLA_PREHEAT_HPB_TEMP 70</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PLA_PREHEAT_FAN_SPEED 0   </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ABS_PREHEAT_HOTEND_TEMP 240</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ABS_PREHEAT_HPB_TEMP 110</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ABS_PREHEAT_FAN_SPEED 0  </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//SD卡支持</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDSUPPORT</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//操作屏幕时，数字电位器转动的最小转动脉冲</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ENCODER_PULSES_PER_STEP 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//蜂鸣器</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SPEAKER</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//一些现成屏幕</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ULTIMAKERCONTROLLER</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ULTIPANEL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PANEL_ONE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAKRPANEL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> VIKI2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> miniVIKI</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ELB_FULL_GRAPHIC_CONTROLLER</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> REPRAP_DISCOUNT_SMART_CONTROLLER</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> G3D_PANEL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MINIPANEL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> REPRAPWORLD_KEYPAD</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> REPRAPWORLD_KEYPAD_MOVE_STEP 10.0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RIGIDBOT_PANEL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BQ_LCD_SMART_CONTROLLER</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RA_CONTROL_PANEL</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 舵机数量，舵机的角度控制可以用M280 P_S_控制，P为舵机编号(0，1，2)，S为角度</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NUM_SERVOS 1 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用舵机改变限位开关位置，数字为舵机编号。</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> X_ENDSTOP_SERVO_NR 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Y_ENDSTOP_SERVO_NR 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Z_ENDSTOP_SERVO_NR 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 三组数据分别对应舵机xyz</span></span><br><span class="line"><span class="comment">//第一个数为触发限位时的舵机角度，第二个数是正常状态下的</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SERVO_ENDSTOP_ANGLES &#123;&#123;0,0&#125;, &#123;0,0&#125;, &#123;70,0&#125;&#125; </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//放下舵机的延迟</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SERVO_DEACTIVATION_DELAY 300</span></span><br></pre></td></tr></table></figure>
+<h1 id="RAMPS主板："><a href="#RAMPS主板：" class="headerlink" title="RAMPS主板："></a>RAMPS主板：</h1><p><img src="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9tptizfvj20m80fw11z.jpg" alt=""><br>  如果arduino2560用的是ams1117的稳压芯片，建议把二极管D1去掉，两个板子单独供电。</p>
+<h1 id="常用的G、M代码"><a href="#常用的G、M代码" class="headerlink" title="常用的G、M代码"></a>常用的G、M代码</h1><h2 id="G代码"><a href="#G代码" class="headerlink" title="G代码"></a>G代码</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G0/G1 X_ Y_ Z_ F</td>
+<td>直线插补</td>
+</tr>
+<tr>
+<td>G2 X_ Y_ I_ J_</td>
+<td>顺圆插补</td>
+</tr>
+<tr>
+<td>G3</td>
+<td>逆圆插补</td>
+</tr>
+<tr>
+<td>G4 S_</td>
+<td>延迟（s）</td>
+</tr>
+<tr>
+<td>G10</td>
+<td>按照M207的设置退丝</td>
+</tr>
+<tr>
+<td>G11</td>
+<td>按照M208的设置退丝</td>
+</tr>
+<tr>
+<td>G28 X_ Y_ Z_</td>
+<td>home轴，默认所有轴</td>
+</tr>
+<tr>
+<td>G29</td>
+<td>自动调平</td>
+</tr>
+<tr>
+<td>G90</td>
+<td>绝对坐标</td>
+</tr>
+<tr>
+<td>G91</td>
+<td>相对坐标</td>
+</tr>
+<tr>
+<td>G92 X_ Y_</td>
+<td>设定当前坐标，默认(0,0,0)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="M代码"><a href="#M代码" class="headerlink" title="M代码"></a>M代码</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0/M1</td>
+<td>无条件停止</td>
+</tr>
+<tr>
+<td>M17</td>
+<td>锁定电机</td>
+</tr>
+<tr>
+<td>M18/M84</td>
+<td>解锁电机</td>
+</tr>
+<tr>
+<td>M20</td>
+<td>列出SD卡文件</td>
+</tr>
+<tr>
+<td>M21</td>
+<td>初始化SD卡</td>
+</tr>
+<tr>
+<td>M22</td>
+<td>弹出SD卡</td>
+</tr>
+<tr>
+<td>M23 文件名</td>
+<td>选择SD卡文件</td>
+</tr>
+<tr>
+<td>M24</td>
+<td>开始打印</td>
+</tr>
+<tr>
+<td>M25</td>
+<td>暂停打印</td>
+</tr>
+<tr>
+<td>M27</td>
+<td>报告打印状态</td>
+</tr>
+<tr>
+<td>M30 文件名</td>
+<td>删除SD卡文件</td>
+</tr>
+<tr>
+<td>M31</td>
+<td>返回连接或加热到目标温度到现在的时间</td>
+</tr>
+<tr>
+<td>M80/M81</td>
+<td>开启/关闭电源</td>
+</tr>
+<tr>
+<td>M82</td>
+<td>设定E轴出丝量，绝对坐标模式</td>
+</tr>
+<tr>
+<td>M83</td>
+<td>设定E轴，相对坐标模式</td>
+</tr>
+<tr>
+<td>M92 X_ Y_ Z_</td>
+<td>设定各轴脉冲数</td>
+</tr>
+<tr>
+<td>M104 S_</td>
+<td>加热到目标温度但不等待</td>
+</tr>
+<tr>
+<td>M105</td>
+<td>返回当前温度</td>
+</tr>
+<tr>
+<td>M106</td>
+<td>开启风扇</td>
+</tr>
+<tr>
+<td>M107</td>
+<td>关闭风扇</td>
+</tr>
+<tr>
+<td>M109</td>
+<td>S_等待加热到设定温度，R_等待冷却到设定温度</td>
+</tr>
+<tr>
+<td>M112</td>
+<td>紧急停机</td>
+</tr>
+<tr>
+<td>M114</td>
+<td>返回当前坐标</td>
+</tr>
+<tr>
+<td>M117</td>
+<td>输出信息到显示屏</td>
+</tr>
+<tr>
+<td>M119</td>
+<td>返回限位开关状态</td>
+</tr>
+<tr>
+<td>M140</td>
+<td>设定热床温度</td>
+</tr>
+<tr>
+<td>M145 H_ B_ F_ S_</td>
+<td>设定预热温度H喷头温度，B热床温度,F风扇速度，S 0PLA,1ABS</td>
+</tr>
+<tr>
+<td>M190</td>
+<td>等待热床加热到目标温度，格式同M109</td>
+</tr>
+<tr>
+<td>M201 X_ Y_</td>
+<td>设置打印时的最大加速度</td>
+</tr>
+<tr>
+<td>M202 X_ Y_</td>
+<td>设置空载时的最大加速度</td>
+</tr>
+<tr>
+<td>M203 X_ Y_</td>
+<td>设置最大移动速度</td>
+</tr>
+<tr>
+<td>M204</td>
+<td>默认加速度，P:打印时，R:挤出机回退，T:空载移动</td>
+</tr>
+<tr>
+<td>M206 X_ Y_ Z_</td>
+<td>坐标偏置</td>
+</tr>
+<tr>
+<td>M207 S_ F_</td>
+<td>设置回退长度和速度</td>
+</tr>
+<tr>
+<td>M220 S_</td>
+<td>设定三轴移动速度百分比</td>
+</tr>
+<tr>
+<td>M221 S_</td>
+<td>设定挤出机速度百分比</td>
+</tr>
+<tr>
+<td>M250 C_</td>
+<td>设置LCD对比度</td>
+</tr>
+<tr>
+<td>M280 P_ S_</td>
+<td>设置舵机角度，P舵机编号，S角度</td>
+</tr>
+<tr>
+<td>M301</td>
+<td>PID设置</td>
+</tr>
+<tr>
+<td>M302</td>
+<td>允许挤出头冷却或S设置最小挤出温度</td>
+</tr>
+<tr>
+<td>M304</td>
+<td>设置热床的PID</td>
+</tr>
+<tr>
+<td>M400</td>
+<td>结束所用运动</td>
+</tr>
+<tr>
+<td>M401</td>
+<td>放下Z探针</td>
+</tr>
+<tr>
+<td>M402</td>
+<td>抬起探针</td>
+</tr>
+<tr>
+<td>M500</td>
+<td>保存参数到EEPROM</td>
+</tr>
+<tr>
+<td>M501</td>
+<td>从EEPROM读取数据</td>
+</tr>
+<tr>
+<td>M502</td>
+<td>恢复出厂设置</td>
+</tr>
+<tr>
+<td>M503</td>
+<td>串口输出当前配置</td>
+</tr>
+<tr>
+<td>M600 X_ Y_ Z_</td>
+<td>暂停打印并移动到指定位置</td>
+</tr>
+<tr>
+<td>M851</td>
+<td>设置自动调平中的Z偏置</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/3D打印机/" rel="tag"># 3D打印机</a>
+          
+            <a href="/tags/marlin固件/" rel="tag"># marlin固件</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/29/Arduino定时器中断/" rel="prev" title="arduino定时器中断">
+                arduino定时器中断 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="YANG" />
+            
+              <p class="site-author-name" itemprop="name">YANG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#marlin基本配置"><span class="nav-number">1.</span> <span class="nav-text">marlin基本配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAMPS主板："><span class="nav-number">2.</span> <span class="nav-text">RAMPS主板：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用的G、M代码"><span class="nav-number">3.</span> <span class="nav-text">常用的G、M代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#G代码"><span class="nav-number">3.1.</span> <span class="nav-text">G代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#M代码"><span class="nav-number">3.2.</span> <span class="nav-text">M代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YANG</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

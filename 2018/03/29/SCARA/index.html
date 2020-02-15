@@ -82,7 +82,7 @@
 <meta name="description" content="做这个SCARA的时候还没学过运动学，所以本文的一些内容十分不规范（一些坐标定义啊，等等），但又懒得改了，所以仅供参考咯。   设计文件我放在了thingiverse上了，https://www.thingiverse.com/thing:2339480    参考平行并联臂结构morgan   (上图)串联臂http://www.thingiverse.com/thing:1241491 (下">
 <meta name="keywords" content="marlin,SCARA">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于marlin固件的SCARA机械臂">
+<meta property="og:title" content="marlin固件改机械臂">
 <meta property="og:url" content="http://yoursite.com/2018/03/29/SCARA/index.html">
 <meta property="og:site_name" content="YANG">
 <meta property="og:description" content="做这个SCARA的时候还没学过运动学，所以本文的一些内容十分不规范（一些坐标定义啊，等等），但又懒得改了，所以仅供参考咯。   设计文件我放在了thingiverse上了，https://www.thingiverse.com/thing:2339480    参考平行并联臂结构morgan   (上图)串联臂http://www.thingiverse.com/thing:1241491 (下">
@@ -94,9 +94,9 @@
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/e8d4eb99gy1fq9t5a23grj20wi0ldmzc.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/e8d4eb99gy1fq9ozhkhpmj20zj0kvmxg.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9tptizfvj20m80fw11z.jpg">
-<meta property="og:updated_time" content="2018-09-29T11:56:56.881Z">
+<meta property="og:updated_time" content="2020-02-15T12:19:03.279Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基于marlin固件的SCARA机械臂">
+<meta name="twitter:title" content="marlin固件改机械臂">
 <meta name="twitter:description" content="做这个SCARA的时候还没学过运动学，所以本文的一些内容十分不规范（一些坐标定义啊，等等），但又懒得改了，所以仅供参考咯。   设计文件我放在了thingiverse上了，https://www.thingiverse.com/thing:2339480    参考平行并联臂结构morgan   (上图)串联臂http://www.thingiverse.com/thing:1241491 (下">
 <meta name="twitter:image" content="http://wx3.sinaimg.cn/mw690/e8d4eb99gy1fq9ozd0hctj21dc0pjq5w.jpg">
 
@@ -134,7 +134,7 @@
 
 
 
-  <title>基于marlin固件的SCARA机械臂 | YANG</title>
+  <title>marlin固件改机械臂 | YANG</title>
   
 
 
@@ -288,7 +288,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">基于marlin固件的SCARA机械臂</h1>
+          <h1 class="post-title" itemprop="name headline">marlin固件改机械臂</h1>
         
 
         <div class="post-meta">
@@ -387,9 +387,6 @@
 </code></pre><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">360</span>:</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int8_t</span> i=<span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(code_seen(axis_codes[i])) </span><br><span class="line">            &#123;</span><br><span class="line">                ManualHomePos[i] = code_value();<span class="comment">//把触发限位时的相对坐标设置成输入的值</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>    
 <p>   2.添加设置偏移量的M代码(M361)<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">361</span>:</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int8_t</span> i=<span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(code_seen(axis_codes[i])) </span><br><span class="line">            &#123;</span><br><span class="line">                SCARA_offset[i] = code_value();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure><br>   3.添加控制舵机的G代码。首先要在 Configuration.h文件中定义舵机<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">5</span>: <span class="comment">// G5 servo contrl</span></span><br><span class="line">      <span class="keyword">if</span> (code_seen(<span class="string">'A'</span>)) </span><br><span class="line">        servos[<span class="number">0</span>].write(code_value());<span class="comment">//舵机A转动所输入的角度</span></span><br><span class="line">      <span class="keyword">if</span> (code_seen(<span class="string">'B'</span>)) </span><br><span class="line">        servos[<span class="number">1</span>].write(code_value());</span><br><span class="line">      <span class="keyword">if</span> (code_seen(<span class="string">'C'</span>)) </span><br><span class="line">        servos[<span class="number">2</span>].write(code_value());</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure><br>   4.添加角度模式 。Marlin_main.cpp文件中添加角度模式的开关变量。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SCARA</span></span><br><span class="line">  <span class="keyword">float</span> axis_scaling[<span class="number">3</span>] = &#123; <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span> &#125;; </span><br><span class="line">  <span class="keyword">float</span> ManualHomePos[<span class="number">3</span>]=&#123;MANUAL_X_HOME_POS,MANUAL_Y_HOME_POS,MANUAL_Y_HOME_POS&#125;; </span><br><span class="line">  <span class="keyword">float</span> SCARA_offset[<span class="number">3</span>]=&#123;SCARA_offset_x,SCARA_offset_y,SCARA_offset_z&#125;;</span><br><span class="line">  <span class="keyword">bool</span> angle_mode=<span class="literal">false</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span>           </span></span><br></pre></td></tr></table></figure><br>   在G代码的case中添加case 95 。即使用G95代码切换角度模式和坐标模式。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">95</span>: </span><br><span class="line">      angle_mode=!angle_mode;</span><br><span class="line">      <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure><br> 反解函数calculate_delta修改为如下，即角度模式为假进行坐标换算，为真不换算。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(angle_mode==<span class="literal">false</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    delta[X_AXIS] = SCARA_theta * SCARA_RAD2DEG; <span class="comment">// Multiply by 180/Pi - Theta is support arm angle (shoulder)</span></span><br><span class="line">    delta[Y_AXIS] = SCARA_psi * SCARA_RAD2DEG;   <span class="comment">// - Psi sub arm angle (elbow)</span></span><br><span class="line">    delta[Z_AXIS] = cartesian[Z_AXIS]-SCARA_offset[Z_AXIS];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">      delta[X_AXIS] = cartesian[X_AXIS];</span><br><span class="line">      delta[Y_AXIS] = cartesian[Y_AXIS];</span><br><span class="line">      delta[Z_AXIS] = cartesian[Z_AXIS];</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure><br>     5.添加当前坐标设定的G代码。原有固件在G92（case 92）代码中只能设置E轴的当前坐标。所以添加如下代码可以把机械手任意的位置设置成想要的坐标。<br>原理即修改坐标偏移量SCARA_offset[i]但不保存到固件<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SCARA</span></span><br><span class="line">        <span class="keyword">if</span> (i == X_AXIS || i == Y_AXIS||i == Z_AXIS) &#123;</span><br><span class="line"></span><br><span class="line">                    SCARA_offset[i]=SCARA_offset[i]-current_position[i]+code_value();<span class="comment">//新的坐标偏移量=旧的坐标偏移量-当前坐标+想要设定的坐标</span></span><br><span class="line">                    current_position[i] = code_value();  <span class="comment">//设定当前坐标为输入的值</span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>   </p>
 <h1 id="RAMPS主板详解："><a href="#RAMPS主板详解：" class="headerlink" title="RAMPS主板详解："></a>RAMPS主板详解：</h1><p><img src="http://wx4.sinaimg.cn/mw690/e8d4eb99gy1fq9tptizfvj20m80fw11z.jpg" alt=""><br>  如果arduino2560用的是ams1117的稳压芯片，建议把二极管D1去掉，两个板子单独供电。</p>
-<h1 id="常用G、M代码："><a href="#常用G、M代码：" class="headerlink" title="常用G、M代码："></a>常用G、M代码：</h1><p>M360 触发限位角度设置<br>M361 原点偏移设置<br>G5 舵机角度控制</p>
-<p>G0 快速点定位<br>G1 直线插补<br>G4 延迟<br>G28 回归所有轴<br>G92 当前坐标设定<br>G95 切换绝对/关节坐标</p>
-<p>M0 停止<br>M3 主轴正转<br>M4 主轴反转<br>M5 主轴停止<br>M17 启动步进电机<br>M20 读取SD卡<br>M21 初始化SD卡<br>M22 弹出SD卡<br>M23 选择SD卡的文件<br>M24 开始SD卡的打印<br>M25 暂停SD卡打印<br>M41 循环<br>M82 挤出机绝对坐标<br>M83 挤出机相对坐标<br>M84 解锁步进电机<br>M92 设置步进电机脉冲数<br>M101 正转挤出机<br>M102 反转挤出机<br>M104 设置挤出机温度<br>M105 获取温度<br>M106 打开风扇<br>M107 关闭风扇<br>M112 紧急停止<br>M114 获取当前坐标和角度<br>M119 获取限位开关状态<br>M201 设置最大打印速度<br>M202 设置最大移动速度<br>M203 设置电机最大速度<br>M204 设置默认加速度<br>M500 保存设置到EEPROM<br>M501 读取EEPROM中的配置<br>M502 恢复出厂设置<br>M503 读取出厂设置</p>
 
       
     </div>
@@ -422,8 +419,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/28/marlin常用G、M代码/" rel="next" title="marlin常用G、M代码">
-                <i class="fa fa-chevron-left"></i> marlin常用G、M代码
+              <a href="/2018/03/29/Arduino定时器中断/" rel="next" title="arduino定时器中断">
+                <i class="fa fa-chevron-left"></i> arduino定时器中断
               </a>
             
           </div>
@@ -432,8 +429,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/29/Arduino定时器中断/" rel="prev" title="arduino定时器中断">
-                arduino定时器中断 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/06/步进电机加减速的设计/" rel="prev" title="步进电机加减速的设计">
+                步进电机加减速的设计 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -513,7 +510,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -524,7 +521,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -535,7 +532,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -568,7 +565,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设计文件"><span class="nav-number">1.</span> <span class="nav-text">设计文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义关节坐标"><span class="nav-number">3.</span> <span class="nav-text">定义关节坐标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正解（关节坐标转化成绝对坐标）"><span class="nav-number">4.</span> <span class="nav-text">正解（关节坐标转化成绝对坐标）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反解（绝对坐标转化为关节坐标）"><span class="nav-number">5.</span> <span class="nav-text">反解（绝对坐标转化为关节坐标）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四轴"><span class="nav-number">6.</span> <span class="nav-text">第四轴</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#marlin基础参数修改"><span class="nav-number">7.</span> <span class="nav-text">marlin基础参数修改</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Marlin固件的修改"><span class="nav-number">8.</span> <span class="nav-text">Marlin固件的修改</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正反解"><span class="nav-number">8.1.</span> <span class="nav-text">正反解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加写入EEPROM的参数："><span class="nav-number">8.2.</span> <span class="nav-text">添加写入EEPROM的参数：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加自定义的G、M代码："><span class="nav-number">8.3.</span> <span class="nav-text">添加自定义的G、M代码：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAMPS主板详解："><span class="nav-number">9.</span> <span class="nav-text">RAMPS主板详解：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用G、M代码："><span class="nav-number">10.</span> <span class="nav-text">常用G、M代码：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设计文件"><span class="nav-number">1.</span> <span class="nav-text">设计文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义关节坐标"><span class="nav-number">3.</span> <span class="nav-text">定义关节坐标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正解（关节坐标转化成绝对坐标）"><span class="nav-number">4.</span> <span class="nav-text">正解（关节坐标转化成绝对坐标）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反解（绝对坐标转化为关节坐标）"><span class="nav-number">5.</span> <span class="nav-text">反解（绝对坐标转化为关节坐标）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四轴"><span class="nav-number">6.</span> <span class="nav-text">第四轴</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#marlin基础参数修改"><span class="nav-number">7.</span> <span class="nav-text">marlin基础参数修改</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Marlin固件的修改"><span class="nav-number">8.</span> <span class="nav-text">Marlin固件的修改</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正反解"><span class="nav-number">8.1.</span> <span class="nav-text">正反解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加写入EEPROM的参数："><span class="nav-number">8.2.</span> <span class="nav-text">添加写入EEPROM的参数：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加自定义的G、M代码："><span class="nav-number">8.3.</span> <span class="nav-text">添加自定义的G、M代码：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAMPS主板详解："><span class="nav-number">9.</span> <span class="nav-text">RAMPS主板详解：</span></a></li></ol></div>
             
 
           </div>
